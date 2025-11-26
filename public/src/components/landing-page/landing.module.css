@@ -1,0 +1,30 @@
+@keyframes pulse-glow {
+  0% {
+    box-shadow: 0 0 5px var(--landing-theme);
+  }
+  50% {
+    box-shadow: 0 0 15px var(--landing-theme);
+  }
+  100% {
+    box-shadow: 0 0 5px var(--landing-theme);
+  }
+}
+
+.landing-cta-button {
+  animation: pulse-glow 3s infinite linear;
+}
+
+.landing-cta-button:hover {
+  background-color: var(--landing-theme-hover) !important;
+  box-shadow: 0 5px 15px var(--landing-theme);
+  padding: 15px 40px;
+  transition: all 0.1s linear;
+}
+
+.inksights-cta {
+  padding: 10px 10px !important;
+}
+
+.landing-faq-nav:hover {
+  text-decoration: underline !important;
+}

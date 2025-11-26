@@ -1,0 +1,17 @@
+.toggle-text {
+  cursor: pointer;
+}
+
+.toggle-text:hover {
+  color: var(--landing-theme);
+}
+
+.toggle-text:active {
+  transform: scale(1.05);
+}
+
+.selected-toggle {
+  color: var(--landing-theme);
+  text-decoration: underline;
+  font-weight: bold;
+}

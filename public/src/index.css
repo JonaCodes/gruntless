@@ -1,0 +1,102 @@
+* {
+  font-family: 'Figtree';
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  margin: 0 auto;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #2a2a2a;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}
+
+:root {
+  /* Colors */
+  --app-theme-color-base-r: 249;
+  --app-theme-color-base-g: 140;
+  --app-theme-color-base-b: 58;
+  --app-theme-color-base:
+    var(--app-theme-color-base-r), var(--app-theme-color-base-g),
+    var(--app-theme-color-base-b);
+
+  --app-theme-color-on: rgba(var(--app-theme-color-base), 1);
+  --app-theme-color-transulcent-25: rgba(var(--app-theme-color-base), 0.25);
+  --app-theme-color-translucent-10: rgba(var(--app-theme-color-base), 0.1);
+  --app-theme-color-off: rgba(var(--app-theme-color-base), 0);
+
+  /* shades: from #F98C3A (dark) up to #FDB943 (light) */
+
+  --app-theme-shade-1: rgb(
+    var(--app-theme-color-base-r),
+    var(--app-theme-color-base-g),
+    var(--app-theme-color-base-b)
+  ); /* #F98C3A */
+
+  --app-theme-shade-2: rgb(
+    calc(var(--app-theme-color-base-r) + 1),
+    calc(var(--app-theme-color-base-g) + 9),
+    calc(var(--app-theme-color-base-b) + 2)
+  ); /* #FA953C */
+
+  --app-theme-shade-3: rgb(
+    calc(var(--app-theme-color-base-r) + 2),
+    calc(var(--app-theme-color-base-g) + 18),
+    calc(var(--app-theme-color-base-b) + 4)
+  ); /* #FB9E3E */
+
+  --app-theme-shade-4: rgb(
+    calc(var(--app-theme-color-base-r) + 2),
+    calc(var(--app-theme-color-base-g) + 27),
+    calc(var(--app-theme-color-base-b) + 5)
+  ); /* #FBA73F */
+
+  --app-theme-shade-5: rgb(
+    calc(var(--app-theme-color-base-r) + 3),
+    calc(var(--app-theme-color-base-g) + 36),
+    calc(var(--app-theme-color-base-b) + 7)
+  ); /* #FCB041 */
+
+  --app-theme-shade-6: rgb(
+    calc(var(--app-theme-color-base-r) + 4),
+    calc(var(--app-theme-color-base-g) + 45),
+    calc(var(--app-theme-color-base-b) + 9)
+  ); /* #FDB943 */
+
+  /* hook icon + landing colors into the new theme */
+
+  --active-icon-blue: rgba(var(--app-theme-color-base), 1);
+  --inactive-icon: var(--mantine-color-gray-9);
+
+  --landing-black: #171b1c;
+  --landing-theme: #fdb943; /* light end of gradient */
+  --landing-theme-hover: #f98c3a; /* darker on hover */
+
+  /* Measurements */
+  --xs-padding: 2px;
+  --medium-radius: 8px;
+
+  /* Borders */
+  --thin-white-border: 2px solid white;
+}

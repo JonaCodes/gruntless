@@ -1,0 +1,23 @@
+{
+  "name": "gruntless",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "pnpm -r run dev",
+    "build": "cd public && npm ci --include=dev && npm run build && cd ../server && npm ci --include=dev && npm run build",
+    "start": "npm run start -w server"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "globals": "^15.15.0",
+    "sequelize-cli": "^6.6.3",
+    "tsx": "^4.20.6"
+  },
+  "engines": {
+    "node": "20.x"
+  },
+  "overrides": {
+    "rollup": "npm:@rollup/wasm-node@^4.40.2"
+  }
+}

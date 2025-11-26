@@ -1,0 +1,40 @@
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter as Router } from 'react-router-dom';
+
+import '@mantine/core/styles.css';
+import '@mantine/charts/styles.css';
+import '@mantine/carousel/styles.css';
+
+import './index.css';
+import { MantineProvider } from '@mantine/core';
+import App from './App.tsx';
+
+// if (import.meta.env.PROD) {
+//   const script = document.createElement('script');
+//   script.src = 'https://cloud.umami.is/script.js';
+//   script.setAttribute(
+//     'data-website-id',
+//     // TODO: Add umami id eventually
+//   );
+//   script.async = true;
+//   script.defer = true;
+//   document.body.appendChild(script);
+
+//   console.log('Loaded umami');
+// }
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <MantineProvider defaultColorScheme='dark'>
+      <Router
+        future={{
+          v7_relativeSplatPath: true,
+          v7_startTransition: true,
+        }}
+      >
+        <App />
+      </Router>
+    </MantineProvider>
+  </StrictMode>
+);

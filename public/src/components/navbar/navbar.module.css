@@ -1,0 +1,27 @@
+.navbar-container {
+  background: linear-gradient(
+    to bottom,
+    var(--app-theme-color-translucent-10),
+    var(--app-theme-color-off)
+  );
+}
+
+.navlink {
+  border-radius: var(--medium-radius);
+}
+
+.navlink:hover {
+  background-color: var(--app-theme-color-translucent-10);
+  color: var(--app-theme-color-on);
+}
+
+.app-logo-text {
+  font-family: 'Poppins';
+  font-size: 21px;
+}
+
+.app-logo-text-icon {
+  color: var(--app-theme-color-on);
+  margin-left: -10px;
+  margin-right: 3px;
+}

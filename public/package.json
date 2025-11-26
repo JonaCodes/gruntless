@@ -1,0 +1,54 @@
+{
+  "name": "public",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "ROLLUP_NO_NATIVE=1 vite build",
+    "start": "vite preview",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@fontsource/caveat": "^5.2.8",
+    "@fontsource/figtree": "^5.2.10",
+    "@fontsource/poppins": "^5.2.7",
+    "@mantine/carousel": "^7.17.8",
+    "@mantine/charts": "7.17.7",
+    "@mantine/core": "7.17.7",
+    "@mantine/dropzone": "7.17.7",
+    "@mantine/form": "7.17.7",
+    "@mantine/hooks": "7.17.7",
+    "@supabase/supabase-js": "^2.84.0",
+    "@tabler/icons-react": "^3.35.0",
+    "mobx": "^6.15.0",
+    "mobx-react-lite": "^4.1.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^6.30.2",
+    "redaxios": "^0.5.1"
+  },
+  "overrides": {
+    "@mantine/charts> @mantine/core": "7.17.7",
+    "@mantine/dropzone> @mantine/core": "7.17.7",
+    "@mantine/form> @mantine/core": "7.17.7"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react-swc": "^3.11.0",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "globals": "^15.15.0",
+    "postcss": "^8.5.6",
+    "postcss-preset-mantine": "^1.18.0",
+    "postcss-simple-vars": "^7.0.1",
+    "prettier": "^3.6.2",
+    "typescript": "~5.7.3",
+    "vite": "^6.4.1"
+  }
+}
