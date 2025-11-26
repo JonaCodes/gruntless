@@ -1,22 +1,19 @@
 import { Button } from '@mantine/core';
-import { IconMail } from '@tabler/icons-react';
-import classes from './landing.module.css';
+import { IconArrowRight } from '@tabler/icons-react';
 import { EVENT_NAMES } from 'shared-consts/event-names';
 import { sendEvent } from 'public/src/clients/app-client';
 import { useEffect } from 'react';
+import classes from './landing.module.css';
+import { COLORS } from 'public/src/consts/colors';
 
 interface ButtonProps {
   message?: string;
   size?: 'xl' | 'lg' | 'md' | 'sm' | 'xs';
-  icon?: React.ReactNode;
-  additionalClassName?: string;
 }
 
 export default function LandingCTAButton({
   size = 'xl',
-  message = 'Be the first to try',
-  icon = <IconMail />,
-  additionalClassName = '',
+  message = 'Eliminate your gruntwork, securely',
 }: ButtonProps) {
   useEffect(() => {
     sendEvent(EVENT_NAMES.CTA_IMPRESSION, { message });
@@ -33,12 +30,18 @@ export default function LandingCTAButton({
 
   return (
     <Button
-      className={`${classes['landing-cta-button']} ${classes[additionalClassName]}`}
-      leftSection={icon}
+      className={classes.ctaButton}
+      rightSection={<IconArrowRight size={20} />}
       size={size}
-      radius='sm'
-      bg={'var(--landing-theme)'}
-      c={'black'}
+      radius='xl'
+      variant='gradient'
+      gradient={{
+        from: COLORS.APP_THEME.SHADE_1,
+        to: COLORS.APP_THEME.SHADE_6,
+        deg: 235,
+      }}
+      c='black'
+      fw={500}
       onClick={handleClick}
     >
       {message}

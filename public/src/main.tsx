@@ -4,7 +4,6 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import '@mantine/core/styles.css';
 import '@mantine/charts/styles.css';
-import '@mantine/carousel/styles.css';
 
 import './index.css';
 import { MantineProvider } from '@mantine/core';

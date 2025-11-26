@@ -1,7 +1,10 @@
-import { Flex, Text, Title, } from '@mantine/core';
+import { Box, Text, Center } from '@mantine/core';
 import { Link, useSearchParams } from 'react-router-dom';
 import WaitlistedComplete from './WaitlistedComplete';
-import classes from './landing.module.css';
+import HeroSection from './HeroSection';
+// import TrustedBySection from './TrustedBySection';
+import FeaturesSection from './FeaturesSection';
+import EfficientImage from '../shared/EfficientImage';
 
 export default function Landing() {
   const [searchParams] = useSearchParams();
@@ -10,28 +13,28 @@ export default function Landing() {
   if (isSignupComplete) return <WaitlistedComplete />;
 
   return (
-    <>
-      <Flex
-        pos={'fixed'}
-        top={0}
-        left={0}
-        p={10}
-        w={'100%'}
-        bg={'var(--landing-black)'}
-        style={{ zIndex: 9 }}
-      >
+    <Box bg='var(--landing-black)' mih='100vh'>
+      <EfficientImage
+        name={'/v1764134535/gruntless/logo-big.png'}
+        maw={50}
+        lazy={false}
+        style={{
+          position: 'fixed',
+          top: 20,
+          left: 20,
+        }}
+      />
+      <HeroSection />
+      {/* <TrustedBySection /> */}
+      <FeaturesSection />
 
-        <Title order={2}>
-          The Landing Page
-        </Title>
-
-        <Text c='dimmed' mt={'xs'} fz={'sm'}>
+      <Center py={40}>
+        <Text c='dimmed' size='sm'>
           Questions? Check out the{' '}
           <Link
             to='/about'
-            className={classes['landing-faq-nav']}
             style={{
-              color: 'var(--mantine-color-anchor)',
+              color: 'var(--app-theme-shade-6)',
               textDecoration: 'none',
               fontWeight: 'bold',
             }}
@@ -39,7 +42,7 @@ export default function Landing() {
             FAQ
           </Link>
         </Text>
-      </Flex >
-    </>
+      </Center>
+    </Box>
   );
 }

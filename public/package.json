@@ -13,12 +13,11 @@
     "@fontsource/caveat": "^5.2.8",
     "@fontsource/figtree": "^5.2.10",
     "@fontsource/poppins": "^5.2.7",
-    "@mantine/carousel": "^7.17.8",
-    "@mantine/charts": "7.17.7",
-    "@mantine/core": "7.17.7",
-    "@mantine/dropzone": "7.17.7",
-    "@mantine/form": "7.17.7",
-    "@mantine/hooks": "7.17.7",
+    "@mantine/charts": "^8.0.0",
+    "@mantine/core": "^8.0.0",
+    "@mantine/dropzone": "^8.0.0",
+    "@mantine/form": "^8.0.0",
+    "@mantine/hooks": "^8.0.0",
     "@supabase/supabase-js": "^2.84.0",
     "@tabler/icons-react": "^3.35.0",
     "mobx": "^6.15.0",
@@ -29,9 +28,9 @@
     "redaxios": "^0.5.1"
   },
   "overrides": {
-    "@mantine/charts> @mantine/core": "7.17.7",
-    "@mantine/dropzone> @mantine/core": "7.17.7",
-    "@mantine/form> @mantine/core": "7.17.7"
+    "@mantine/charts> @mantine/core": "^8.0.0",
+    "@mantine/dropzone> @mantine/core": "^8.0.0",
+    "@mantine/form> @mantine/core": "^8.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
