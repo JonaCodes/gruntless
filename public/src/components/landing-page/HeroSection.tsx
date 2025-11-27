@@ -1,4 +1,4 @@
-import { Title, Text, Box, Group, Flex } from '@mantine/core';
+import { Title, Text, Box, Flex } from '@mantine/core';
 import { IconShieldCheck } from '@tabler/icons-react';
 import LandingCTAButton from './LandingCTAButton';
 import { STYLES } from 'public/src/consts/styling';

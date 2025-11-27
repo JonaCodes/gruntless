@@ -1,10 +1,5 @@
 import { Flex, Badge, Text, ActionIcon } from '@mantine/core';
-import {
-  IconShare,
-  IconSettings,
-  IconStar,
-  IconHeart,
-} from '@tabler/icons-react';
+import { IconShare, IconSettings, IconHeart } from '@tabler/icons-react';
 import { WorkflowMetadata } from '@shared/types/workflows';
 
 interface WorkflowCardHeaderProps {

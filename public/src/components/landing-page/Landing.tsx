@@ -1,4 +1,4 @@
-import { Flex, Text, Center, Box } from '@mantine/core';
+import { Text, Center, Box } from '@mantine/core';
 import { Link, useSearchParams } from 'react-router-dom';
 import WaitlistedComplete from './WaitlistedComplete';
 import HeroSection from './HeroSection';
