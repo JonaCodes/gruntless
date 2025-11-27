@@ -1,9 +1,9 @@
-import { Container, Text, Group, Box } from '@mantine/core';
+import { Text, Group, Box, Flex } from '@mantine/core';
 import { trustedCompanies } from './landingData';
 
 export default function TrustedBySection() {
   return (
-    <Container size='lg' px={20}>
+    <Flex direction='column'>
       <Text ta='center' size='xs' fw={600} tt='uppercase' c='dimmed' mb={40}>
         Trusted by Compliance Teams In
       </Text>
@@ -32,6 +32,6 @@ export default function TrustedBySection() {
           </Group>
         ))}
       </Group>
-    </Container>
+    </Flex>
   );
 }

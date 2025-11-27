@@ -13,11 +13,9 @@ export default function WaitlistedComplete() {
       gap={'md'}
       mt={{ base: 0, lg: 50 }}
     >
-      <Title ff={'Poppins'} fz={{ base: 24, lg: 50 }}>
-        Glad to have you on board!
-      </Title>
+      <Title fz={{ base: 24, lg: 50 }}>Glad to have you on board!</Title>
       <Text c='dimmed'>
-        We'll let you know as soon as we're ready to create your insights
+        We'll let you know as soon as we're ready to eliminate your gruntwork
       </Text>
 
       <EfficientImage

@@ -1,27 +1,24 @@
-import { Container, Title, Text, Box, Group } from '@mantine/core';
+import { Title, Text, Box, Group, Flex } from '@mantine/core';
 import { IconShieldCheck } from '@tabler/icons-react';
 import LandingCTAButton from './LandingCTAButton';
+import { STYLES } from 'public/src/consts/styling';
+import classes from './landing.module.css';
 
 export default function HeroSection() {
   return (
-    <Container size='lg' py={50} px={20}>
+    <Flex direction='column' py={50}>
       <Box ta='center'>
-        <Group
+        <Flex
           justify='center'
-          gap={8}
-          mb={32}
-          style={{
-            display: 'inline-flex',
-            background: 'rgba(249, 140, 58, 0.15)',
-            padding: '8px 20px',
-            borderRadius: '24px',
-          }}
+          gap='xs'
+          mb='xl'
+          className={classes.privacyBadge}
         >
-          <IconShieldCheck size={18} color='var(--app-theme-shade-6)' />
-          <Text size='sm' fw={500} c='var(--app-theme-shade-6)'>
+          <IconShieldCheck size={18} color={STYLES.COLORS.APP_THEME.SHADE_6} />
+          <Text size='sm' fw={500} c={STYLES.COLORS.APP_THEME.SHADE_6}>
             Privacy-first workflows built by AI
           </Text>
-        </Group>
+        </Flex>
 
         <Title
           order={1}
@@ -33,7 +30,14 @@ export default function HeroSection() {
           style={{ fontSize: 'clamp(42px, 8vw, 64px)' }}
         >
           Never Do{' '}
-          <span style={{ color: 'var(--app-theme-shade-6)' }}>Gruntwork</span>{' '}
+          <span
+            style={{
+              color: STYLES.COLORS.APP_THEME.SHADE_6,
+              fontFamily: STYLES.FONTS.HEADERS,
+            }}
+          >
+            Gruntwork
+          </span>{' '}
           Again
         </Title>
 
@@ -46,14 +50,14 @@ export default function HeroSection() {
         </Text>
 
         <Text size='lg' c='dimmed' mb='xl' maw={700} mx='auto'>
-          Gruntless is like a personal developer for all your file busywork.
-          Describe any repetitive task - from organizing client PDFs to updating
-          complex spreadsheets - and Gruntless builds a secure, local workflow
-          to do it for you.
+          Gruntless is your personal developer for file busywork. Describe any
+          tedious task - from organizing client PDFs to updating complex
+          spreadsheets - and Gruntless builds a secure, local workflow to do it
+          for you.
         </Text>
 
         <LandingCTAButton />
       </Box>
-    </Container>
+    </Flex>
   );
 }

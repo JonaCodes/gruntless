@@ -1,0 +1,63 @@
+.workflowCard {
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.workflowCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(249, 140, 58, 0.2);
+  border-color: rgba(249, 140, 58, 0.3) !important;
+}
+
+.chevronIcon {
+  /* color: white; */
+  transition: color 0.2s ease;
+}
+
+.workflowCard:hover .chevronIcon {
+  color: var(--app-theme-shade-1);
+}
+
+.actionButton {
+  background: linear-gradient(
+    135deg,
+    var(--app-theme-shade-3) 0%,
+    var(--app-theme-shade-1) 100%
+  );
+  transition: all 0.2s ease;
+}
+
+.actionButton:hover {
+  background: linear-gradient(
+    135deg,
+    var(--app-theme-shade-1) 0%,
+    #e67a2e 100%
+  );
+  transform: translateY(-1px);
+}
+
+.dropzoneArea {
+  border: 2px dashed rgba(134, 142, 150, 0.3);
+  background-color: transparent;
+  transition: all 0.2s ease;
+}
+
+.dropzoneArea:hover {
+  border-color: rgba(249, 140, 58, 0.5);
+  background-color: rgba(249, 140, 58, 0.05);
+}
+
+.fab {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+
+  box-shadow: 0 4px 12px rgba(249, 140, 58, 0.4);
+  transition: all 0.2s ease;
+  z-index: 100;
+}
+
+.fab:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(249, 140, 58, 0.6);
+}

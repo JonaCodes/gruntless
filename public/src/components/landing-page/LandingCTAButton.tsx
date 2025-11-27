@@ -1,18 +1,17 @@
 import { Button } from '@mantine/core';
 import { IconArrowRight } from '@tabler/icons-react';
-import { EVENT_NAMES } from 'shared-consts/event-names';
+import { EVENT_NAMES } from '@shared/consts/event-names';
 import { sendEvent } from 'public/src/clients/app-client';
 import { useEffect } from 'react';
 import classes from './landing.module.css';
-import { COLORS } from 'public/src/consts/colors';
+import { STYLES } from 'public/src/consts/styling';
+import appStore from 'public/src/stores/appStore';
 
 interface ButtonProps {
   message?: string;
-  size?: 'xl' | 'lg' | 'md' | 'sm' | 'xs';
 }
 
 export default function LandingCTAButton({
-  size = 'xl',
   message = 'Eliminate your gruntwork, securely',
 }: ButtonProps) {
   useEffect(() => {
@@ -32,12 +31,12 @@ export default function LandingCTAButton({
     <Button
       className={classes.ctaButton}
       rightSection={<IconArrowRight size={20} />}
-      size={size}
+      size={appStore.isSmall ? 'lg' : 'xl'}
       radius='xl'
       variant='gradient'
       gradient={{
-        from: COLORS.APP_THEME.SHADE_1,
-        to: COLORS.APP_THEME.SHADE_6,
+        from: STYLES.COLORS.APP_THEME.SHADE_1,
+        to: STYLES.COLORS.APP_THEME.SHADE_6,
         deg: 235,
       }}
       c='black'

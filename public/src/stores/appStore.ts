@@ -4,9 +4,14 @@ import { supabase } from '../lib/supabase';
 class AppStore {
   isLoadingSignIn = false;
   session: any;
+  isSmall = false;
 
   constructor() {
     makeAutoObservable(this);
+  }
+
+  setIsSmall(isSmall: boolean) {
+    this.isSmall = isSmall;
   }
 
   setIsLoadingSignIn(isLoading: boolean) {

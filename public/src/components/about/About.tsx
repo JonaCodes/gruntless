@@ -10,9 +10,9 @@ import {
 } from '@mantine/core';
 import { observer } from 'mobx-react-lite';
 import { sendEvent } from 'public/src/clients/app-client';
-import { COLORS } from 'public/src/consts/colors';
+import { STYLES } from 'public/src/consts/styling';
 import { useEffect } from 'react';
-import { EVENT_NAMES } from 'shared-consts/event-names';
+import { EVENT_NAMES } from '@shared/consts/event-names';
 
 const faq = [
   {
@@ -48,7 +48,12 @@ const About = observer(() => {
   }, []);
 
   const highlightText = (text: string) => (
-    <span style={{ color: COLORS.APP_THEME.SHADE_6, fontWeight: 'bold' }}>
+    <span
+      style={{
+        color: STYLES.COLORS.APP_THEME.SHADE_6,
+        fontFamily: STYLES.FONTS.HEADERS,
+      }}
+    >
       {text}
     </span>
   );
@@ -57,9 +62,7 @@ const About = observer(() => {
     <Container size='md' py='xl'>
       <Stack gap='md' mb={50}>
         <Flex align='center' gap='sm'>
-          <Title order={2} ff='Poppins'>
-            The {highlightText('Gruntless')} Story
-          </Title>
+          <Title order={2}>The {highlightText('Gruntless')} Story</Title>
         </Flex>
 
         <Text size='md' c={'dimmed'}>
@@ -102,7 +105,7 @@ const About = observer(() => {
         </Text>
 
         <Box mt='xl'>
-          <Title order={3} mb='md' ff='Poppins'>
+          <Title order={3} mb='md'>
             FAQ
           </Title>
           <Accordion variant='separated'>

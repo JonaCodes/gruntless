@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import EventService from '../services/events/events-service';
-import { EVENT_NAMES, EventName } from '../../shared/consts/event-names';
+import { EVENT_NAMES, EventName } from '@shared/consts/event-names';
 
 export const createEvent = async (req: Request, res: Response) => {
   try {

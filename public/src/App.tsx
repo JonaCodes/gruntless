@@ -12,10 +12,11 @@ import appStore from './stores/appStore';
 import userStore from './stores/userStore';
 import { getUserData } from './clients/app-client';
 import EmptyState from './components/empty-states/EmptyState';
-// import { APP_ADMIN_ID } from 'shared-consts/general';
+// import { APP_ADMIN_ID } from '@shared/consts/general';
 import Logo from './components/navbar/Logo';
 import Navbar from './components/navbar/Navbar';
 import About from './components/about/About';
+import Workflows from './components/workflows/Workflows';
 
 const App = observer(() => {
   const isSmall = useMediaQuery('(max-width: 768px)');
@@ -28,7 +29,10 @@ const App = observer(() => {
   const LARGE_PADDING = 'xl';
   const GENERAL_PADDING = LARGE_PADDING;
 
-  // Auth disabled for landing page
+  useEffect(() => {
+    appStore.setIsSmall(isSmall);
+  }, [isSmall]);
+
   useEffect(() => {
     appStore.loadSession().then(async () => {
       userStore.setIsLoadingUser(true);
@@ -50,10 +54,8 @@ const App = observer(() => {
 
   return (
     <AppShell
-      padding={GENERAL_PADDING}
-      pl={{ base: GENERAL_PADDING, xl: '8rem' }}
-      pr={{ base: GENERAL_PADDING, xl: '8rem' }}
-      header={isSmall ? { height: 55 } : { height: 0 }}
+      padding={isLandingPage ? 0 : GENERAL_PADDING}
+      px={{ base: isLandingPage ? GENERAL_PADDING : 0, xl: '8rem' }}
       bg={isLandingPage ? 'var(--landing-black)' : 'inherit'}
       navbar={{
         width: isLandingPage ? 0 : 300,
@@ -82,17 +84,14 @@ const App = observer(() => {
       <AppShell.Main style={{ height: isLandingPage ? 'inherit' : '100vh' }}>
         {!opened && (
           <Routes>
-
             <Route path='/' element={<Landing />} />
-
 
             {/* Oops page with optional section param */}
             <Route path='/oops/:section?' element={<EmptyState />} />
 
-
             <Route path='/about' element={<About />} />
+            <Route path='/workflows' element={<Workflows />} />
             <Route path='/auth/callback' element={<AuthCallback />} />
-
 
             {/* Protected Routes */}
             {/* <Route

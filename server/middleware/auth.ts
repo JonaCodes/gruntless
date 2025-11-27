@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { AuthService } from '../services/authService';
 import User from 'models/user';
-import { APP_ADMIN_ID } from '../../shared/consts/general';
+import { APP_ADMIN_ID } from '@shared/consts/general';
 
 export const requireAuth = async (
   req: Request,

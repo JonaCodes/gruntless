@@ -1,6 +1,10 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter as Router } from 'react-router-dom';
+import '@fontsource/figtree/400.css';
+import '@fontsource/figtree/600.css';
+import '@fontsource/science-gothic/400.css';
+import '@fontsource/science-gothic/600.css';
 
 import '@mantine/core/styles.css';
 import '@mantine/charts/styles.css';

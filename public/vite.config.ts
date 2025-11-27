@@ -26,12 +26,11 @@ export default defineConfig(({ mode }) => {
       fs: {
         strict: false,
       },
+      allowedHosts: ['semidiaphanously-chondritic-robbie.ngrok-free.dev'],
     },
     resolve: {
       alias: {
-        'shared-types': path.resolve(__dirname, '../shared/types'),
-        'shared-utils': path.resolve(__dirname, '../shared/utils'),
-        'shared-consts': path.resolve(__dirname, '../shared/consts'),
+        '@shared': path.resolve(__dirname, '../shared'),
         'public/src': path.resolve(__dirname, 'src'),
       },
       extensions: ['.ts', '.tsx', '.js', '.json'],

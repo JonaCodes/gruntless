@@ -18,9 +18,7 @@
     "noUncheckedSideEffectImports": true,
     "baseUrl": ".",
     "paths": {
-      "shared-types/*": ["shared/types/*"],
-      "shared-utils/*": ["shared/utils/*"],
-      "shared-consts/*": ["shared/consts/*"]
+      "@shared/*": ["shared/*"]
     },
     "typeRoots": ["./server/types", "./node_modules/@types"]
   },

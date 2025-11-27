@@ -1,12 +1,12 @@
-import { Container, Title, SimpleGrid, Card, Text, Flex } from '@mantine/core';
+import { Title, SimpleGrid, Card, Text, Flex } from '@mantine/core';
 import { features } from './landingData';
 import classes from './landing.module.css';
 
 export default function FeaturesSection() {
   return (
-    <Container size='lg' px={20}>
-      <Title order={2} size={36} fw={700} ta='center' mb={60} c='white'>
-        Why Use Gruntless?
+    <Flex direction='column'>
+      <Title order={2} size={36} fw={400} ta='center' mb={60} c='white'>
+        Why Gruntless?
       </Title>
 
       <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing='lg'>
@@ -38,6 +38,6 @@ export default function FeaturesSection() {
           );
         })}
       </SimpleGrid>
-    </Container>
+    </Flex>
   );
 }

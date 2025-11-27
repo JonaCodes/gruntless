@@ -1,13 +1,10 @@
 import { Flex, NavLink } from '@mantine/core';
 import { observer } from 'mobx-react-lite';
 import { Link, useLocation } from 'react-router-dom';
-import {
-  IconQuestionMark,
-} from '@tabler/icons-react';
+import { IconQuestionMark, IconLayoutGrid } from '@tabler/icons-react';
 import NavAvatar from './NavAvatar';
 import classes from './navbar.module.css';
 import Logo from './Logo';
-
 
 interface NavbarProps {
   setNavbarOpened: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,8 +14,13 @@ const Navbar = observer(({ setNavbarOpened }: NavbarProps) => {
   const location = useLocation();
   const closeNavBar = () => setNavbarOpened(false);
 
-
   const navLinks = [
+    {
+      label: 'Workflows',
+      description: 'Build, manage, and run your Grunt workflows',
+      icon: IconLayoutGrid,
+      to: '/workflows',
+    },
     {
       label: 'About',
       description: 'Learn more about Gruntless',

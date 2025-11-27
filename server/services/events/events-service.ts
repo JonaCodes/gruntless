@@ -1,6 +1,6 @@
 import models from '../../models';
 import { Request } from 'express';
-import { EventName } from '../../../shared/consts/event-names';
+import { EventName } from '@shared/consts/event-names';
 
 interface EventData {
   name: string;

@@ -1,4 +1,4 @@
-import { EventName } from 'shared-consts/event-names';
+import { EventName } from '@shared/consts/event-names';
 import { ENDPOINTS, HTTP_METHODS } from './client-consts';
 import { makeRequest } from './http-client';
 

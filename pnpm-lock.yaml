@@ -23,15 +23,12 @@ importers:
 
   public:
     dependencies:
-      '@fontsource/caveat':
-        specifier: ^5.2.8
-        version: 5.2.8
       '@fontsource/figtree':
         specifier: ^5.2.10
         version: 5.2.10
-      '@fontsource/poppins':
-        specifier: ^5.2.7
-        version: 5.2.7
+      '@fontsource/science-gothic':
+        specifier: ^5.2.1
+        version: 5.2.1
       '@mantine/charts':
         specifier: ^8.0.0
         version: 8.3.9(@mantine/core@8.3.9(@mantine/hooks@8.3.9(react@19.2.0))(@types/react@19.2.7)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@mantine/hooks@8.3.9(react@19.2.0))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(recharts@2.15.4(react-dom@19.2.0(react@19.2.0))(react@19.2.0))
@@ -400,14 +397,11 @@ packages:
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
 
-  '@fontsource/caveat@5.2.8':
-    resolution: {integrity: sha512-9fUUfFE2IQFKbx+xOcaeQxxmh8iJguEb8z+j1PeueO4UUx+XfT4pRm/B04ZDvFA794/iRxY/IibmP8ZKtIf4rw==}
-
   '@fontsource/figtree@5.2.10':
     resolution: {integrity: sha512-nlO06N1qad88ySqzi/a2xwDBkamfZ4MFilP8la5dDyRY36ED0UYTs2hhtwJf8fM52+Nn7dQO2r27reKaXOyOIg==}
 
-  '@fontsource/poppins@5.2.7':
-    resolution: {integrity: sha512-6uQyPmseo4FgI97WIhA4yWRlNaoLk4vSDK/PyRwdqqZb5zAEuc+Kunt8JTMcsHYUEGYBtN15SNkMajMdqUSUmg==}
+  '@fontsource/science-gothic@5.2.1':
+    resolution: {integrity: sha512-mkhQ4jkQFC04+4f/wo5qofP0+L1QX9d4N4FpbhoDhqTFTevHe56uppkUzNxIYTJdIGgS4LZ/DA9Ji2vGAUA1VQ==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -2747,11 +2741,9 @@ snapshots:
 
   '@floating-ui/utils@0.2.10': {}
 
-  '@fontsource/caveat@5.2.8': {}
-
   '@fontsource/figtree@5.2.10': {}
 
-  '@fontsource/poppins@5.2.7': {}
+  '@fontsource/science-gothic@5.2.1': {}
 
   '@humanfs/core@0.19.1': {}
 

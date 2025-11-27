@@ -25,13 +25,10 @@ const NavAvatar = observer(() => {
         size={'md'}
       />
       <Flex direction={'column'}>
-        <Text size='sm' ff='Poppins'>
-          {user?.full_name}
-        </Text>
+        <Text size='sm'>{user?.full_name}</Text>
         <Text
           size='xs'
           c={'dimmed'}
-          ff='Poppins'
           style={{ cursor: 'pointer' }}
           onClick={() => {
             supabase.auth.signOut();
