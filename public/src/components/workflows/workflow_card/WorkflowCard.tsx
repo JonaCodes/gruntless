@@ -1,6 +1,6 @@
 import { Card } from '@mantine/core';
 import { Workflow } from '@shared/types/workflows';
-import classes from './workflows.module.css';
+import classes from '../workflows.module.css';
 import WorkflowCardHeader from './WorkflowCardHeader';
 import WorkflowCardBody from './WorkflowCardBody';
 import WorkflowCardFooter from './WorkflowCardFooter';

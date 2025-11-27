@@ -5,7 +5,7 @@ import { Flex, Text, ActionIcon } from '@mantine/core';
 import { IconCircleChevronRight } from '@tabler/icons-react';
 import { Workflow } from '@shared/types/workflows';
 // import { WorkflowField } from '@shared/types/workflows';
-import classes from './workflows.module.css';
+import classes from '../workflows.module.css';
 import { STYLES } from 'public/src/consts/styling';
 // import { useState } from 'react';
 

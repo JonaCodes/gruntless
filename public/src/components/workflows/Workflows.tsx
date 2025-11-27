@@ -1,9 +1,9 @@
 import { Title, SimpleGrid, ActionIcon, Flex } from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';
 import { workflows } from './workflowsData';
-import WorkflowCard from './WorkflowCard';
-import classes from './workflows.module.css';
+import WorkflowCard from './workflow_card/WorkflowCard';
 import { STYLES } from 'public/src/consts/styling';
+import classes from './workflows.module.css';
 
 const Workflows = () => {
   const handleCreateWorkflow = () => {
