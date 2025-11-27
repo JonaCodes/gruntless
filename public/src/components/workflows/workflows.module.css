@@ -1,16 +1,40 @@
 .workflowCard {
   transition: all 0.2s ease;
-  cursor: pointer;
+}
+
+.workflowCard:hover,
+.workflowCard[data-active='true'] {
+  transform: translateY(-4px);
+  border-color: rgba(249, 140, 58, 0.3);
+  box-shadow: 0 1px 3px rgba(249, 140, 58, 0.2);
+
+  .workflowCardName {
+    background: linear-gradient(
+      135deg,
+      var(--app-theme-shade-1) 0%,
+      var(--app-theme-shade-6) 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }
 
 .workflowCard:hover {
-  transform: translateY(-4px);
   box-shadow: 0 8px 24px rgba(249, 140, 58, 0.2);
-  border-color: rgba(249, 140, 58, 0.3) !important;
+}
+
+.workflowCardBody {
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.workflowCardBody:active {
+  transform: scale(0.98);
+  transition: all 0.1s ease;
 }
 
 .chevronIcon {
-  /* color: white; */
   transition: color 0.2s ease;
 }
 
@@ -40,6 +64,8 @@
   border: 2px dashed rgba(134, 142, 150, 0.3);
   background-color: transparent;
   transition: all 0.2s ease;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
 .dropzoneArea:hover {

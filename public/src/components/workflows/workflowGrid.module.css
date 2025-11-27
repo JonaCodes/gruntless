@@ -1,0 +1,50 @@
+/* Workflow Grid - Responsive Breakpoints */
+.workflowGrid {
+  display: grid;
+  gap: var(--mantine-spacing-lg);
+}
+
+/* WorkflowNavbar Closed - Default responsive behavior */
+@media (max-width: 874px) {
+  .workflowGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 875px) and (max-width: 1199px) {
+  .workflowGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .workflowGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* WorkflowNavbar Open - More conservative breakpoints + mobile hide */
+.workflowGrid[data-workflow-navbar-open='true'] {
+  display: none; /* Hidden on mobile by default */
+}
+
+@media (min-width: 1015px) and (max-width: 1274px) {
+  .workflowGrid[data-workflow-navbar-open='true'] {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 1275px) and (max-width: 1499px) {
+  .workflowGrid[data-workflow-navbar-open='true'] {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1500px) {
+  .workflowGrid[data-workflow-navbar-open='true'] {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

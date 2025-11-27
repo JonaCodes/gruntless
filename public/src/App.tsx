@@ -1,5 +1,11 @@
 import { observer } from 'mobx-react-lite';
-import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import {
+  Routes,
+  Route,
+  useLocation,
+  Navigate,
+  useSearchParams,
+} from 'react-router-dom';
 import { AppShell, Burger, Group } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { useEffect, useState } from 'react';
@@ -17,6 +23,8 @@ import Logo from './components/navbar/Logo';
 import Navbar from './components/navbar/Navbar';
 import About from './components/about/About';
 import Workflows from './components/workflows/Workflows';
+import WorkflowNavbar from './components/workflows/WorkflowNavbar';
+import workflowsAsideClasses from './components/workflows/workflowsAside.module.css';
 
 const App = observer(() => {
   const isSmall = useMediaQuery('(max-width: 768px)');
@@ -25,6 +33,7 @@ const App = observer(() => {
 
   const location = useLocation();
   const isLandingPage = location.pathname === '/';
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const LARGE_PADDING = 'xl';
   const GENERAL_PADDING = LARGE_PADDING;
@@ -52,16 +61,33 @@ const App = observer(() => {
     window.scrollTo({ top: 0 });
   }, [location.pathname]);
 
+  // Sync URL query params with workflow navbar state
+  useEffect(() => {
+    const workflowId = searchParams.get('workflow');
+    if (workflowId && workflowId !== appStore.selectedWorkflowId) {
+      appStore.openWorkflowNavbar(workflowId);
+    } else if (!workflowId && appStore.workflowNavbarOpened) {
+      appStore.closeWorkflowNavbar();
+    }
+  }, [searchParams]);
+
   return (
     <AppShell
       padding={isLandingPage ? 0 : GENERAL_PADDING}
-      px={{ base: isLandingPage ? GENERAL_PADDING : 0, xl: '8rem' }}
+      px={{ base: isLandingPage ? GENERAL_PADDING : 0, xl: '5rem' }}
       bg={isLandingPage ? 'var(--landing-black)' : 'inherit'}
       navbar={{
         width: isLandingPage ? 0 : 300,
         breakpoint: 'sm',
         collapsed: { mobile: !opened },
       }}
+      {...(appStore.workflowNavbarOpened && {
+        aside: {
+          width: isSmall ? '100%' : 400,
+          breakpoint: 'sm',
+          collapsed: { mobile: false, desktop: false },
+        },
+      })}
     >
       {isSmall && !isLandingPage && (
         <AppShell.Header>
@@ -79,6 +105,23 @@ const App = observer(() => {
         >
           <Navbar setNavbarOpened={setNavbarOpened} />
         </AppShell.Navbar>
+      )}
+
+      {appStore.workflowNavbarOpened && (
+        <AppShell.Aside
+          p='xl'
+          className={workflowsAsideClasses['workflow-navbar']}
+        >
+          {appStore.selectedWorkflowId && (
+            <WorkflowNavbar
+              workflowId={appStore.selectedWorkflowId}
+              onClose={() => {
+                appStore.closeWorkflowNavbar();
+                setSearchParams({});
+              }}
+            />
+          )}
+        </AppShell.Aside>
       )}
 
       <AppShell.Main style={{ height: isLandingPage ? 'inherit' : '100vh' }}>

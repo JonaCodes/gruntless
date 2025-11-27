@@ -1,25 +1,13 @@
-import { Flex, Badge, Text, ActionIcon } from '@mantine/core';
+import { Flex, Badge, ActionIcon } from '@mantine/core';
 import { IconShare, IconSettings, IconHeart } from '@tabler/icons-react';
 import { WorkflowMetadata } from '@shared/types/workflows';
+import { getBadgeColor } from '../utils';
 
 interface WorkflowCardHeaderProps {
   metadata: WorkflowMetadata;
 }
 
 const WorkflowCardHeader = ({ metadata }: WorkflowCardHeaderProps) => {
-  const getBadgeColor = (category: string) => {
-    switch (category) {
-      case 'Sales':
-        return 'blue';
-      case 'Finance':
-        return 'green';
-      case 'Internal':
-        return 'yellow';
-      default:
-        return 'gray';
-    }
-  };
-
   return (
     <Flex direction='column' gap='xs'>
       <Flex justify='space-between' align='center'>
@@ -45,9 +33,6 @@ const WorkflowCardHeader = ({ metadata }: WorkflowCardHeaderProps) => {
           </Badge>
         </Flex>
       </Flex>
-      <Text size='lg' fw={600} c='white'>
-        {metadata.name}
-      </Text>
     </Flex>
   );
 };

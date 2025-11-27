@@ -1,0 +1,30 @@
+/* Animated beam on top of the border */
+.workflow-navbar::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px; /* thickness of the beam */
+  pointer-events: none;
+
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(249, 140, 50, 0.9) 50%,
+    transparent 100%
+  );
+
+  background-size: 100% 200%; /* taller than element */
+  background-position: 0 100%; /* start at bottom */
+  animation: workflowBorderBeam 5s linear infinite;
+}
+
+@keyframes workflowBorderBeam {
+  0% {
+    background-position: 0 100%;
+  }
+  100% {
+    background-position: 0 -100%;
+  }
+}

@@ -81,7 +81,7 @@ export const workflows: Workflow[] = [
       {
         id: 'document-upload',
         type: 'file_upload',
-        label: 'Upload Document',
+        label: 'Upload sales doc',
         accept: [MIME_TYPES.pdf, MIME_TYPES.docx, 'text/plain'],
       },
       {

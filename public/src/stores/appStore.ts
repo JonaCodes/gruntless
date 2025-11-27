@@ -5,6 +5,8 @@ class AppStore {
   isLoadingSignIn = false;
   session: any;
   isSmall = false;
+  selectedWorkflowId: string | null = null;
+  workflowNavbarOpened = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -26,6 +28,19 @@ class AppStore {
     }
 
     this.session = data.session;
+  }
+
+  openWorkflowNavbar(workflowId: string) {
+    this.selectedWorkflowId = workflowId;
+    this.workflowNavbarOpened = true;
+  }
+
+  closeWorkflowNavbar() {
+    this.workflowNavbarOpened = false;
+    // Delay clearing selectedWorkflowId for smooth close animation
+    setTimeout(() => {
+      this.selectedWorkflowId = null;
+    }, 200);
   }
 
   get sessionAccessToken() {
