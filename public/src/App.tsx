@@ -24,7 +24,7 @@ import Navbar from './components/navbar/Navbar';
 import About from './components/about/About';
 import Workflows from './components/workflows/Workflows';
 import WorkflowNavbar from './components/workflows/WorkflowNavbar';
-import workflowsAsideClasses from './components/workflows/workflowsAside.module.css';
+import workflowsNavbarClasses from './components/workflows/workflowsNavbar.module.css';
 
 const App = observer(() => {
   const isSmall = useMediaQuery('(max-width: 768px)');
@@ -110,7 +110,7 @@ const App = observer(() => {
       {appStore.workflowNavbarOpened && (
         <AppShell.Aside
           p='xl'
-          className={workflowsAsideClasses['workflow-navbar']}
+          className={workflowsNavbarClasses['workflow-navbar']}
         >
           {appStore.selectedWorkflowId && (
             <WorkflowNavbar
