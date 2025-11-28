@@ -1,8 +1,9 @@
 import { Flex, Title, ActionIcon } from '@mantine/core';
 import { IconX } from '@tabler/icons-react';
-import { workflows } from './workflowsData';
-import WorkflowForm from './workflow_detail/WorkflowForm';
+import { workflows } from '../workflowsData';
+import WorkflowForm from './WorkflowForm';
 import { STYLES } from 'public/src/consts/styling';
+import { SecurityGuarantee } from './SecurityGuarantee';
 
 interface WorkflowNavbarProps {
   workflowId: string;
@@ -35,7 +36,14 @@ const WorkflowNavbar = ({ workflowId, onClose }: WorkflowNavbarProps) => {
         </ActionIcon>
       </Flex>
 
-      <WorkflowForm fields={fields} actionButton={actionButton} />
+      <WorkflowForm
+        key={workflowId}
+        fields={fields}
+        actionButton={actionButton}
+        execution={workflow.execution}
+      />
+
+      <SecurityGuarantee />
     </Flex>
   );
 };

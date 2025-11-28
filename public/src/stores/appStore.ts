@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, runInAction } from 'mobx';
 import { supabase } from '../lib/supabase';
 
 class AppStore {
@@ -39,7 +39,9 @@ class AppStore {
     this.workflowNavbarOpened = false;
     // Delay clearing selectedWorkflowId for smooth close animation
     setTimeout(() => {
-      this.selectedWorkflowId = null;
+      runInAction(() => {
+        this.selectedWorkflowId = null;
+      });
     }, 200);
   }
 

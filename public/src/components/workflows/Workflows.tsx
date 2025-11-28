@@ -5,7 +5,7 @@ import { workflows } from './workflowsData';
 import WorkflowCard from './workflow_card/WorkflowCard';
 import { STYLES } from 'public/src/consts/styling';
 import classes from './workflows.module.css';
-import gridClasses from './workflowGrid.module.css';
+import gridClasses from './workflow/workflowGrid.module.css';
 import appStore from '../../stores/appStore';
 
 const Workflows = observer(() => {

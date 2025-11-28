@@ -28,8 +28,16 @@ export interface WorkflowAction {
   onClick: () => void;
 }
 
+export interface WorkflowExecution {
+  engine: 'pyodide';
+  dependencies: string[];
+  output_filename: string;
+  script: string;
+}
+
 export interface Workflow {
   metadata: WorkflowMetadata;
   fields: WorkflowField[];
   actionButton: WorkflowAction;
+  execution?: WorkflowExecution;
 }

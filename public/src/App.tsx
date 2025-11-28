@@ -23,7 +23,7 @@ import Logo from './components/navbar/Logo';
 import Navbar from './components/navbar/Navbar';
 import About from './components/about/About';
 import Workflows from './components/workflows/Workflows';
-import WorkflowNavbar from './components/workflows/WorkflowNavbar';
+import WorkflowNavbar from './components/workflows/workflow/WorkflowNavbar';
 import workflowsNavbarClasses from './components/workflows/workflowsNavbar.module.css';
 
 const App = observer(() => {

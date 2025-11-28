@@ -24,7 +24,8 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^6.30.2",
-    "redaxios": "^0.5.1"
+    "redaxios": "^0.5.1",
+    "pyodide": "^0.29.0"
   },
   "overrides": {
     "@mantine/charts> @mantine/core": "^8.0.0",
