@@ -4,6 +4,7 @@ import { sequelize } from './models/index';
 import { exec } from 'child_process';
 import util from 'util';
 import authRoutes from './routes/authRoutes';
+import workflowRoutes from './routes/workflowRoutes';
 import { requireAuth } from './middleware/auth';
 
 const app = express();
@@ -17,6 +18,7 @@ app.get('/auth/callback', (_, res) => {
 });
 
 app.use('/auth', requireAuth, authRoutes);
+app.use('/api/workflows', requireAuth, workflowRoutes);
 
 if (process.env.NODE_ENV === 'production') {
   const buildPath = path.resolve(__dirname, '../../public/dist');

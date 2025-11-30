@@ -1,11 +1,55 @@
 import { Request, Response } from 'express';
 
-export const getWorkflows = async (_: Request, res: Response) => {
+export const listWorkflows = async (_req: Request, res: Response) => {
   try {
-    const workflows: any[] = [];
-    res.json(workflows);
+    // TODO
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: JSON.stringify(error) });
+    console.error('listWorkflows error:', error);
+    res.status(500).json({ error: 'Failed to list workflows' });
+  }
+};
+
+export const createWorkflow = async (req: Request, res: Response) => {
+  try {
+    // TODO
+  } catch (error) {
+    console.error('createWorkflow error:', error);
+    res.status(500).json({ error: 'Failed to create workflow' });
+  }
+};
+
+export const getWorkflow = async (req: Request, res: Response) => {
+  try {
+    // TODO
+  } catch (error) {
+    console.error('getWorkflow error:', error);
+    res.status(500).json({ error: 'Failed to get workflow' });
+  }
+};
+
+export const sendMessage = async (req: Request, res: Response) => {
+  try {
+    // TODO
+  } catch (error) {
+    console.error('sendMessage error:', error);
+    res.status(500).json({ error: 'Failed to send message' });
+  }
+};
+
+export const approveWorkflow = async (req: Request, res: Response) => {
+  try {
+    // TODO
+  } catch (error) {
+    console.error('approveWorkflow error:', error);
+    res.status(500).json({ error: 'Failed to approve workflow' });
+  }
+};
+
+export const editWorkflow = async (req: Request, res: Response) => {
+  try {
+    // TODO
+  } catch (error) {
+    console.error('editWorkflow error:', error);
+    res.status(500).json({ error: 'Failed to start edit' });
   }
 };

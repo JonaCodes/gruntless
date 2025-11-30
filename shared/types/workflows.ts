@@ -31,7 +31,7 @@ export interface WorkflowAction {
 export interface WorkflowExecution {
   engine: 'pyodide';
   dependencies: string[];
-  output_filename: string;
+  outputFilename: string;
   script: string;
 }
 
@@ -40,4 +40,8 @@ export interface Workflow {
   fields: WorkflowField[];
   actionButton: WorkflowAction;
   execution?: WorkflowExecution;
+}
+
+export interface FileExtract {
+  fileName: string;
 }

@@ -27,7 +27,7 @@ export const workflows: any[] = [
     execution: {
       engine: 'pyodide',
       dependencies: ['pandas'],
-      output_filename: 'merged_user_data.csv',
+      outputFilename: 'merged_user_data.csv',
       script:
         "import pandas as pd\nimport os\n\n# Files are now organized by field ID\n# The 'source_files' field contains the CSV files to merge\nFIELD_DIR = '/input_files/source_files'\n\n# Find the CSV files in the field directory\nfiles = [f for f in os.listdir(FIELD_DIR) if f.endswith('.csv')]\n\nif len(files) < 2:\n    raise ValueError('Please upload at least 2 CSV files')\n\n# Load Dataframes\ndf1 = pd.read_csv(os.path.join(FIELD_DIR, files[0]))\ndf2 = pd.read_csv(os.path.join(FIELD_DIR, files[1]))\n\nprint(f'Loaded {files[0]} with columns: {list(df1.columns)}')\nprint(f'Loaded {files[1]} with columns: {list(df2.columns)}')\n\n# Intelligent Merge - find common key\ncommon_cols = list(set(df1.columns) & set(df2.columns))\n\nif 'user_id' not in common_cols:\n     raise ValueError('Both files must contain a \"user_id\" column')\n\nmerged_df = pd.merge(df1, df2, on='user_id', how='inner')\n\n# Write output\noutput_path = '/output/merged_user_data.csv'\nmerged_df.to_csv(output_path, index=False)\nprint(f'Successfully merged {len(merged_df)} rows.')",
     },
@@ -62,7 +62,7 @@ export const workflows: any[] = [
     execution: {
       engine: 'pyodide',
       dependencies: [],
-      output_filename: 'extracted_data.txt',
+      outputFilename: 'extracted_data.txt',
       script:
         "print('Hello from PDF Extractor')\nwith open('/output/extracted_data.txt', 'w') as f:\n    f.write('PDF extraction not yet implemented')",
     },
@@ -96,7 +96,7 @@ export const workflows: any[] = [
     execution: {
       engine: 'pyodide',
       dependencies: [],
-      output_filename: 'processed_document.txt',
+      outputFilename: 'processed_document.txt',
       script:
         "print('Hello from Osher-Ad Aggregates')\nwith open('/output/processed_document.txt', 'w') as f:\n    f.write('Document processing not yet implemented')",
     },

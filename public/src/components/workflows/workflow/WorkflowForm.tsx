@@ -42,7 +42,7 @@ const WorkflowForm = ({
       ([fieldId, fileList]) => fileList.map((file) => ({ fieldId, file }))
     );
 
-    await run(execution.script, filesWithFieldIds, execution.output_filename);
+    await run(execution.script, filesWithFieldIds, execution.outputFilename);
   };
 
   const handleDownload = () => {
@@ -50,7 +50,7 @@ const WorkflowForm = ({
       const url = URL.createObjectURL(output);
       const a = document.createElement('a');
       a.href = url;
-      a.download = execution.output_filename;
+      a.download = execution.outputFilename;
       a.click();
       URL.revokeObjectURL(url);
     }

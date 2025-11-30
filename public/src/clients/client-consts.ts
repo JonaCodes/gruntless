@@ -10,4 +10,12 @@ export const ENDPOINTS = {
     CURRENT_USER: '/auth/me',
     EVENT: '/public/api/event',
   },
+  WORKFLOWS: {
+    LIST: '/api/workflows',
+    CREATE: '/api/workflows',
+    GET: (id: number) => `/api/workflows/${id}`,
+    SEND_MESSAGE: (id: number) => `/api/workflows/${id}/messages`,
+    APPROVE: (id: number) => `/api/workflows/${id}/approve`,
+    EDIT: (id: number) => `/api/workflows/${id}/edit`,
+  },
 };

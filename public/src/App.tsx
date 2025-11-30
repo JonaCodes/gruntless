@@ -25,6 +25,7 @@ import About from './components/about/About';
 import Workflows from './components/workflows/Workflows';
 import WorkflowNavbar from './components/workflows/workflow/WorkflowNavbar';
 import workflowsNavbarClasses from './components/workflows/workflowsNavbar.module.css';
+import WorkflowCreator from './components/workflow-creator/WorkflowCreator';
 
 const App = observer(() => {
   const isSmall = useMediaQuery('(max-width: 768px)');
@@ -134,6 +135,8 @@ const App = observer(() => {
 
             <Route path='/about' element={<About />} />
             <Route path='/workflows' element={<Workflows />} />
+            <Route path='/workflows/new' element={<WorkflowCreator />} />
+            <Route path='/workflows/:id/edit' element={<WorkflowCreator />} />
             <Route path='/auth/callback' element={<AuthCallback />} />
 
             {/* Protected Routes */}
