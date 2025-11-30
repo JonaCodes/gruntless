@@ -1,0 +1,49 @@
+.pulsingBubble {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    var(--app-theme-shade-1) 0%,
+    var(--app-theme-shade-6) 100%
+  );
+  animation: pulse 1.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.2);
+  }
+}
+
+/* Shimmer/shine text effect */
+.shimmerText {
+  color: var(--mantine-color-gray-4);
+  background: linear-gradient(
+    90deg,
+    var(--mantine-color-gray-4) 0%,
+    var(--app-theme-shade-3) 50%,
+    var(--mantine-color-gray-4) 100%
+  );
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 2s linear infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

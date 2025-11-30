@@ -1,0 +1,31 @@
+.messageBubble {
+  padding: 12px 16px;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.userMessage {
+  background: linear-gradient(
+    135deg,
+    var(--app-theme-shade-1) 0%,
+    var(--app-theme-shade-6) 100%
+  );
+  color: white;
+  margin-left: auto;
+  border-bottom-right-radius: 0;
+}
+
+.assistantMessage {
+  background-color: rgba(134, 142, 150, 0.15);
+  color: var(--mantine-color-gray-1);
+  margin-right: auto;
+  border-bottom-left-radius: 0;
+}
+
+.messageBubble:hover {
+  transform: translateY(-1px);
+}
+
+textarea {
+  scrollbar-width: none;
+}
