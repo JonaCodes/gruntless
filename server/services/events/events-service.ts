@@ -18,7 +18,7 @@ class EventService {
     try {
       await models.Event.create({
         name: eventData.name,
-        user_id: eventData.userId || null,
+        userId: eventData.userId || null,
         ip: eventData.ip || null,
         data: eventData.data || null,
       });

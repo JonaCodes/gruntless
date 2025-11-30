@@ -3,11 +3,11 @@ import { WORKFLOW_MESSAGE_ROLE } from '@shared/consts/workflows';
 
 export default class WorkflowMessage extends Model {
   public id!: number;
-  public workflow_id!: number;
-  public account_id!: number;
+  public workflowId!: number;
+  public accountId!: number;
   public role!: keyof typeof WORKFLOW_MESSAGE_ROLE;
   public content!: string;
-  public created_at!: Date;
+  public createdAt!: Date;
 
   static initialize(sequelize: Sequelize) {
     super.init(
@@ -17,11 +17,11 @@ export default class WorkflowMessage extends Model {
           autoIncrement: true,
           primaryKey: true,
         },
-        workflow_id: {
+        workflowId: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
-        account_id: {
+        accountId: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },

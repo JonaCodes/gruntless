@@ -18,7 +18,7 @@ export class AuthService {
 
     // Create user in our database
     const user = await User.create({
-      supabase_id: authData.user.id,
+      supabaseId: authData.user.id,
       email: authData.user.email!,
       provider: 'email',
     });
@@ -38,14 +38,14 @@ export class AuthService {
 
     // Update or create user in our database
     const [user] = await User.findOrCreate({
-      where: { supabase_id: authData.user.id },
+      where: { supabaseId: authData.user.id },
       defaults: {
         email: authData.user.email!,
         provider: 'email',
       },
     });
 
-    await user.update({ last_login: new Date() });
+    await user.update({ lastLogin: new Date() });
     return user;
   }
 
@@ -61,16 +61,16 @@ export class AuthService {
 
     // Update or create user in our database
     const [user] = await User.findOrCreate({
-      where: { supabase_id: authData.user.id },
+      where: { supabaseId: authData.user.id },
       defaults: {
         email: authData.user.email!,
-        full_name: authData.user.user_metadata.full_name,
-        avatar_url: authData.user.user_metadata.avatar_url,
+        fullName: authData.user.user_metadata.full_name,
+        avatarUrl: authData.user.user_metadata.avatar_url,
         provider,
       },
     });
 
-    await user.update({ last_login: new Date() });
+    await user.update({ lastLogin: new Date() });
     return user;
   }
 
@@ -89,17 +89,17 @@ export class AuthService {
     if (!authUser) return null;
 
     const [user] = await User.findOrCreate({
-      where: { supabase_id: authUser.id },
+      where: { supabaseId: authUser.id },
       defaults: {
         email: authUser.email!,
-        full_name: authUser.user_metadata.full_name,
-        avatar_url: authUser.user_metadata.avatar_url,
+        fullName: authUser.user_metadata.full_name,
+        avatarUrl: authUser.user_metadata.avatar_url,
         provider: authUser.app_metadata.provider,
-        last_login: new Date(),
+        lastLogin: new Date(),
       },
     });
 
-    await user.update({ last_login: new Date() });
+    await user.update({ lastLogin: new Date() });
     return user;
   }
 }

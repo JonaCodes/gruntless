@@ -3,11 +3,11 @@ import { Model, DataTypes, Sequelize } from 'sequelize';
 export default class Event extends Model {
   public id!: number;
   public name!: string;
-  public user_id!: number | null;
+  public userId!: number | null;
   public ip!: string | null;
   public data!: any | null;
-  public created_at!: Date;
-  public updated_at!: Date;
+  public createdAt!: Date;
+  public updatedAt!: Date;
 
   static initialize(sequelize: Sequelize) {
     super.init(
@@ -21,7 +21,7 @@ export default class Event extends Model {
           type: DataTypes.STRING,
           allowNull: false,
         },
-        user_id: {
+        userId: {
           type: DataTypes.INTEGER,
           allowNull: true,
           references: {

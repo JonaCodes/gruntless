@@ -3,9 +3,11 @@ import { Model, DataTypes, Sequelize } from 'sequelize';
 export default class Account extends Model {
   public id!: number;
   public name!: string | null;
-  public primary_contact_email!: string;
+  public primaryContactEmail!: string;
   public provider!: string;
-  public last_login!: Date;
+  public lastLogin!: Date;
+  public createdAt!: Date;
+  public updatedAt!: Date;
 
   static initialize(sequelize: Sequelize) {
     super.init(
@@ -19,17 +21,17 @@ export default class Account extends Model {
           type: DataTypes.STRING,
           allowNull: true,
         },
-        primary_contact_email: {
+        primaryContactEmail: {
           type: DataTypes.STRING,
           allowNull: false,
           unique: true,
         },
-        created_at: {
+        createdAt: {
           type: DataTypes.DATE,
           allowNull: false,
           defaultValue: DataTypes.NOW,
         },
-        updated_at: {
+        updatedAt: {
           type: DataTypes.DATE,
           allowNull: false,
           defaultValue: DataTypes.NOW,

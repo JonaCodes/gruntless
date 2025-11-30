@@ -10,17 +10,17 @@ const STATUS_VALUES = Object.values(WORKFLOW_VERSION_STATUS);
 
 export default class WorkflowVersion extends Model {
   public id!: number;
-  public workflow_id!: number;
-  public account_id!: number;
+  public workflowId!: number;
+  public accountId!: number;
   public version!: number;
   public status!: keyof typeof WORKFLOW_VERSION_STATUS;
-  public is_active!: boolean;
-  public file_extracts!: FileExtract[];
+  public isActive!: boolean;
+  public fileExtracts!: FileExtract[];
   public fields!: WorkflowField[] | null;
   public execution!: WorkflowExecution | null;
-  public rejection_reason!: string | null;
-  public created_at!: Date;
-  public updated_at!: Date;
+  public rejectionReason!: string | null;
+  public createdAt!: Date;
+  public updatedAt!: Date;
 
   static initialize(sequelize: Sequelize) {
     super.init(
@@ -30,11 +30,11 @@ export default class WorkflowVersion extends Model {
           autoIncrement: true,
           primaryKey: true,
         },
-        workflow_id: {
+        workflowId: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
-        account_id: {
+        accountId: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
@@ -47,12 +47,12 @@ export default class WorkflowVersion extends Model {
           allowNull: false,
           defaultValue: WORKFLOW_VERSION_STATUS.VALIDATING,
         },
-        is_active: {
+        isActive: {
           type: DataTypes.BOOLEAN,
           allowNull: false,
           defaultValue: false,
         },
-        file_extracts: {
+        fileExtracts: {
           type: DataTypes.JSONB,
           allowNull: false,
         },
@@ -64,7 +64,7 @@ export default class WorkflowVersion extends Model {
           type: DataTypes.JSONB,
           allowNull: true,
         },
-        rejection_reason: {
+        rejectionReason: {
           type: DataTypes.TEXT,
           allowNull: true,
         },

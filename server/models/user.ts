@@ -2,12 +2,15 @@ import { Model, DataTypes, Sequelize } from 'sequelize';
 
 export default class User extends Model {
   public id!: number;
-  public supabase_id!: string;
+  public supabaseId!: string;
   public email!: string;
-  public full_name!: string | null;
-  public avatar_url!: string | null;
+  public fullName!: string | null;
+  public avatarUrl!: string | null;
   public provider!: string;
-  public last_login!: Date;
+  public lastLogin!: Date;
+  public accountId!: number;
+  public createdAt!: Date;
+  public updatedAt!: Date;
 
   static initialize(sequelize: Sequelize) {
     super.init(
@@ -17,7 +20,15 @@ export default class User extends Model {
           autoIncrement: true,
           primaryKey: true,
         },
-        supabase_id: {
+        account_id: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          references: {
+            model: 'accounts',
+            key: 'id',
+          },
+        },
+        supabaseId: {
           type: DataTypes.STRING,
           allowNull: false,
           unique: true,
@@ -27,11 +38,11 @@ export default class User extends Model {
           allowNull: false,
           unique: true,
         },
-        full_name: {
+        fullName: {
           type: DataTypes.STRING,
           allowNull: true,
         },
-        avatar_url: {
+        avatarUrl: {
           type: DataTypes.STRING,
           allowNull: true,
         },
@@ -39,7 +50,7 @@ export default class User extends Model {
           type: DataTypes.ENUM('email', 'google', 'apple'),
           allowNull: false,
         },
-        last_login: {
+        lastLogin: {
           type: DataTypes.DATE,
           allowNull: false,
           defaultValue: DataTypes.NOW,

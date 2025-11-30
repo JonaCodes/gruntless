@@ -2,13 +2,13 @@ import { Model, DataTypes, Sequelize } from 'sequelize';
 
 export default class Workflow extends Model {
   public id!: number;
-  public account_id!: number;
-  public user_id!: number;
+  public accountId!: number;
+  public userId!: number;
   public name!: string | null;
   public description!: string | null;
   public label!: string | null;
-  public created_at!: Date;
-  public updated_at!: Date;
+  public createdAt!: Date;
+  public updatedAt!: Date;
 
   static initialize(sequelize: Sequelize) {
     super.init(
@@ -18,11 +18,11 @@ export default class Workflow extends Model {
           autoIncrement: true,
           primaryKey: true,
         },
-        account_id: {
+        accountId: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
-        user_id: {
+        userId: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },

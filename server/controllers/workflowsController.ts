@@ -9,7 +9,7 @@ export const listWorkflows = async (_req: Request, res: Response) => {
   }
 };
 
-export const createWorkflow = async (req: Request, res: Response) => {
+export const createWorkflow = async (_req: Request, res: Response) => {
   try {
     // TODO
   } catch (error) {
@@ -18,7 +18,7 @@ export const createWorkflow = async (req: Request, res: Response) => {
   }
 };
 
-export const getWorkflow = async (req: Request, res: Response) => {
+export const getWorkflow = async (_req: Request, res: Response) => {
   try {
     // TODO
   } catch (error) {
@@ -27,7 +27,7 @@ export const getWorkflow = async (req: Request, res: Response) => {
   }
 };
 
-export const sendMessage = async (req: Request, res: Response) => {
+export const sendMessage = async (_req: Request, res: Response) => {
   try {
     // TODO
   } catch (error) {
@@ -36,7 +36,7 @@ export const sendMessage = async (req: Request, res: Response) => {
   }
 };
 
-export const approveWorkflow = async (req: Request, res: Response) => {
+export const approveWorkflow = async (_req: Request, res: Response) => {
   try {
     // TODO
   } catch (error) {
@@ -45,7 +45,7 @@ export const approveWorkflow = async (req: Request, res: Response) => {
   }
 };
 
-export const editWorkflow = async (req: Request, res: Response) => {
+export const editWorkflow = async (_req: Request, res: Response) => {
   try {
     // TODO
   } catch (error) {

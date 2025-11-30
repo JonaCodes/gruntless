@@ -2,16 +2,16 @@ import { Model, DataTypes, Sequelize } from 'sequelize';
 
 export default class LlmTokenUsage extends Model {
   public id!: number;
-  public account_id!: number;
-  public user_id!: number;
-  public task_name!: string;
+  public accountId!: number;
+  public userId!: number;
+  public taskName!: string;
   public model!: string;
-  public input_tokens!: number;
-  public output_tokens!: number;
-  public total_tokens!: number;
+  public inputTokens!: number;
+  public outputTokens!: number;
+  public totalTokens!: number;
 
-  public readonly created_at!: Date;
-  public readonly updated_at!: Date;
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
 
   static initialize(sequelize: Sequelize) {
     super.init(
@@ -21,15 +21,15 @@ export default class LlmTokenUsage extends Model {
           autoIncrement: true,
           primaryKey: true,
         },
-        account_id: {
+        accountId: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
-        user_id: {
+        userId: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
-        task_name: {
+        taskName: {
           type: DataTypes.STRING,
           allowNull: false,
         },
@@ -37,20 +37,20 @@ export default class LlmTokenUsage extends Model {
           type: DataTypes.STRING,
           allowNull: false,
         },
-        input_tokens: {
+        inputTokens: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
-        output_tokens: {
+        outputTokens: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
-        created_at: {
+        createdAt: {
           type: DataTypes.DATE,
           allowNull: false,
           defaultValue: DataTypes.NOW,
         },
-        updated_at: {
+        updatedAt: {
           type: DataTypes.DATE,
           allowNull: false,
           defaultValue: DataTypes.NOW,

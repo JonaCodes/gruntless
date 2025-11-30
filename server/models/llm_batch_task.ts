@@ -2,10 +2,10 @@ import { Model, DataTypes, Sequelize } from 'sequelize';
 
 export default class LlmBatchTask extends Model {
   public id!: number;
-  public batch_id!: string;
-  public custom_id!: string;
+  public batchId!: string;
+  public customId!: string;
   public model!: string;
-  public task_name!: string;
+  public taskName!: string;
   public status!:
     | 'validating'
     | 'failed'
@@ -16,8 +16,8 @@ export default class LlmBatchTask extends Model {
     | 'cancelling'
     | 'cancelled';
 
-  public readonly created_at!: Date;
-  public readonly updated_at!: Date;
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
 
   static initialize(sequelize: Sequelize) {
     super.init(
@@ -27,15 +27,15 @@ export default class LlmBatchTask extends Model {
           autoIncrement: true,
           primaryKey: true,
         },
-        batch_id: {
+        batchId: {
           type: DataTypes.STRING,
           allowNull: false,
         },
-        task_name: {
+        taskName: {
           type: DataTypes.STRING,
           allowNull: true,
         },
-        custom_id: {
+        customId: {
           type: DataTypes.STRING,
           allowNull: false,
         },
@@ -57,12 +57,12 @@ export default class LlmBatchTask extends Model {
           allowNull: false,
           defaultValue: 'validating',
         },
-        created_at: {
+        createdAt: {
           type: DataTypes.DATE,
           allowNull: false,
           defaultValue: DataTypes.NOW,
         },
-        updated_at: {
+        updatedAt: {
           type: DataTypes.DATE,
           allowNull: false,
           defaultValue: DataTypes.NOW,
@@ -77,7 +77,7 @@ export default class LlmBatchTask extends Model {
     );
   }
 
-  static associate(models: any) {
+  static associate(_: any) {
     // No associations needed for now
   }
 }

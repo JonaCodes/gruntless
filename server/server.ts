@@ -6,6 +6,7 @@ import util from 'util';
 import authRoutes from './routes/authRoutes';
 import workflowRoutes from './routes/workflowRoutes';
 import { requireAuth } from './middleware/auth';
+import { requireAccountId } from 'middleware/validators';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,7 +19,7 @@ app.get('/auth/callback', (_, res) => {
 });
 
 app.use('/auth', requireAuth, authRoutes);
-app.use('/api/workflows', requireAuth, workflowRoutes);
+app.use('/api/workflows', requireAuth, requireAccountId, workflowRoutes);
 
 if (process.env.NODE_ENV === 'production') {
   const buildPath = path.resolve(__dirname, '../../public/dist');
