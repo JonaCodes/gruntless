@@ -7,10 +7,13 @@ import { STYLES } from 'public/src/consts/styling';
 import classes from './workflows.module.css';
 import gridClasses from './workflow/workflowGrid.module.css';
 import appStore from '../../stores/appStore';
+import { useNavigate } from 'react-router-dom';
 
 const Workflows = observer(() => {
+  const navigate = useNavigate();
+
   const handleCreateWorkflow = () => {
-    console.log('Create new workflow - implementation pending');
+    navigate('/workflows/new');
   };
 
   return (

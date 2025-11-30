@@ -34,6 +34,11 @@ const App = observer(() => {
 
   const location = useLocation();
   const isLandingPage = location.pathname === '/';
+  const isWorkflowCreatorPage =
+    location.pathname === '/workflows/new' ||
+    (location.pathname.startsWith('/workflows/') &&
+      location.pathname.endsWith('/edit'));
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const LARGE_PADDING = 'xl';
@@ -74,8 +79,9 @@ const App = observer(() => {
 
   return (
     <AppShell
-      padding={isLandingPage ? 0 : GENERAL_PADDING}
-      px={{ base: isLandingPage ? GENERAL_PADDING : 0, xl: '5rem' }}
+      // 0 vertical padding because we want the side nav to span from top to bottom, just the aside navbar does
+      py={isWorkflowCreatorPage ? 0 : GENERAL_PADDING}
+      px={GENERAL_PADDING}
       bg={isLandingPage ? 'var(--landing-black)' : 'inherit'}
       navbar={{
         width: isLandingPage ? 0 : 300,

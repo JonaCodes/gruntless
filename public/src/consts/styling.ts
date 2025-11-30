@@ -16,4 +16,7 @@ export const STYLES = {
     HEADERS: 'Science Gothic',
     GENERAL: 'Figtree',
   },
+  SPACING: {
+    XXL: 64, // mantine's xl = 32
+  },
 };
