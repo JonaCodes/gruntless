@@ -1,10 +1,26 @@
+import { useRef, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Flex, Textarea, ActionIcon } from '@mantine/core';
 import { IconSend } from '@tabler/icons-react';
 import workflowChatStore from '../../../stores/workflow-creator/workflowChatStore';
+import workflowFilesStore from '../../../stores/workflow-creator/workflowFilesStore';
 import { STYLES } from '../../../consts/styling';
 
 const ChatInput = observer(() => {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (workflowFilesStore.allFilesApproved) {
+      textareaRef.current?.focus();
+    }
+  }, [workflowFilesStore.allFilesApproved]);
+
+  useEffect(() => {
+    workflowChatStore.registerInputFocus(() => {
+      textareaRef.current?.focus();
+    });
+  }, []);
+
   const handleSend = () => {
     if (!workflowChatStore.inputValue.trim()) return;
 
@@ -24,6 +40,7 @@ const ChatInput = observer(() => {
   return (
     <Flex pt={'lg'}>
       <Textarea
+        ref={textareaRef}
         flex={1}
         placeholder={workflowChatStore.inputPlaceholder}
         value={workflowChatStore.inputValue}
@@ -51,11 +68,6 @@ const ChatInput = observer(() => {
           </ActionIcon>
         }
         rightSectionWidth={32}
-        styles={{
-          input: {
-            paddingRight: 28,
-          },
-        }}
       />
     </Flex>
   );

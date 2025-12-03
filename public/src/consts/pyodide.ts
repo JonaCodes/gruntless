@@ -16,6 +16,7 @@ export const PYODIDE_CONFIG = {
 export const WORKER_MESSAGES = {
   INIT: 'INIT',
   RUN: 'RUN',
+  EXTRACT: 'EXTRACT',
   READY: 'READY',
   LOG: 'LOG',
   SUCCESS: 'SUCCESS',

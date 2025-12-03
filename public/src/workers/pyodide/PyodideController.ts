@@ -136,7 +136,11 @@ shutil.make_archive('/${tempZipName}', 'zip', '${PYODIDE_CONFIG.DIRS.OUTPUT}')
     }
   }
 
-  private ensureDir(dir: string) {
+  public getPyodide(): PyodideInterface | null {
+    return this.pyodide;
+  }
+
+  public ensureDir(dir: string) {
     if (this.pyodide && !this.pyodide.FS.analyzePath(dir).exists) {
       this.pyodide.FS.mkdir(dir);
     }

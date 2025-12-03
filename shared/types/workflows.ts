@@ -42,6 +42,21 @@ export interface Workflow {
   execution?: WorkflowExecution;
 }
 
+export type FileType = 'csv' | 'xlsx' | 'pdf';
+
+export const EXTRACTION_STATUS = {
+  EXTRACTING: 'extracting',
+  SUCCESS: 'success',
+  ERROR: 'error',
+} as const;
+
+export type ExtractionStatus =
+  (typeof EXTRACTION_STATUS)[keyof typeof EXTRACTION_STATUS];
+
 export interface FileExtract {
   fileName: string;
+  fileType: FileType;
+  columns?: string[];
+  sample_rows?: string[][];
+  row_count?: number;
 }

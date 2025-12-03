@@ -6,7 +6,7 @@ import workflowsNavbarClasses from '../workflows/workflowsNavbar.module.css';
 import { STYLES } from 'public/src/consts/styling';
 
 const WorkflowCreator = observer(() => {
-  const CHAT_AREA_RATIO = 0.35;
+  const CHAT_AREA_RATIO = 0.5;
 
   return (
     <Flex h='100%'>

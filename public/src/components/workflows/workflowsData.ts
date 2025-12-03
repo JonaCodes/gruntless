@@ -8,8 +8,8 @@ export const workflows: any[] = [
       description: 'Merges Age and City data based on User ID.',
       category: 'Sales',
       lastRun: null,
-      numRuns: 0,
-      numSaved: 0,
+      numRuns: 104,
+      numSaved: 12,
     },
     fields: [
       {

@@ -6,13 +6,13 @@ import {
   Title,
   Accordion,
   Stack,
-  Button,
 } from '@mantine/core';
 import { observer } from 'mobx-react-lite';
 import { sendEvent } from 'public/src/clients/app-client';
 import { STYLES } from 'public/src/consts/styling';
 import { useEffect } from 'react';
 import { EVENT_NAMES } from '@shared/consts/event-names';
+import { ReachOut } from '../shared/ReachOut';
 
 const faq = [
   {
@@ -120,18 +120,7 @@ const About = observer(() => {
       </Stack>
 
       <Flex align={'center'} w={'100%'} justify={'center'} direction={'column'}>
-        <Text fz={14} ta={'center'}>
-          More questions? Reach out at{' '}
-          <Button
-            component='a'
-            href='mailto:support@quillside.com'
-            variant='subtle'
-            m={0}
-            p={0}
-          >
-            support@quillside.com
-          </Button>
-        </Text>
+        <ReachOut text='More questions? Reach out at' />
         <Text size='sm' c='dimmed' mt={-8}>
           Quillside is the company behind Gruntless
         </Text>

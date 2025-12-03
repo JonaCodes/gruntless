@@ -45,9 +45,6 @@ export const usePyodideRunner = (options: PyodideRunnerOptions = {}) => {
       const { type, payload } = event.data;
 
       switch (type) {
-        case WORKER_MESSAGES.READY:
-          isReadyRef.current = true;
-          break;
         case WORKER_MESSAGES.LOG:
           // Avoids unneccessary log updates if we are idle
           setState((prev) => {
@@ -79,9 +76,8 @@ export const usePyodideRunner = (options: PyodideRunnerOptions = {}) => {
 
     const unsubscribe = manager.subscribe(handleMessage);
 
-    worker.postMessage({
-      type: WORKER_MESSAGES.INIT,
-      payload: { dependencies: options.dependencies || [] },
+    manager.ensureInitialized(options.dependencies || []).then(() => {
+      isReadyRef.current = true;
     });
 
     return () => {

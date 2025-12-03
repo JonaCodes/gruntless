@@ -1,6 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 import { WorkflowMessage } from '@shared/types/workflowChat';
 import { WORKFLOW_MESSAGE_ROLE } from '@shared/consts/workflows';
+import workflowFilesStore from './workflowFilesStore';
 
 class WorkflowChatStore {
   messages: WorkflowMessage[] = [];
@@ -8,6 +9,7 @@ class WorkflowChatStore {
   isWaitingForResponse: boolean = false;
   isWaitingForFileApproval: boolean = false;
   loaderText: string = '';
+  private inputFocusCallback: (() => void) | null = null;
 
   constructor() {
     makeAutoObservable(this);
@@ -15,7 +17,11 @@ class WorkflowChatStore {
 
   // Computed properties
   get isInputDisabled(): boolean {
-    return this.isWaitingForResponse || this.isWaitingForFileApproval;
+    return (
+      this.isWaitingForResponse ||
+      this.isWaitingForFileApproval ||
+      !workflowFilesStore.allFilesApproved
+    );
   }
 
   get shouldShowLoader(): boolean {
@@ -25,7 +31,26 @@ class WorkflowChatStore {
   get inputPlaceholder(): string {
     if (this.isWaitingForResponse) return 'Waiting for response...';
     if (this.isWaitingForFileApproval) return 'Waiting for file approval...';
+
+    // Step-based placeholder logic
+    if (!workflowFilesStore.hasFiles) {
+      return 'Please upload at least one file to start';
+    }
+
+    if (!workflowFilesStore.allFilesApproved) {
+      return 'Please approve your file(s)';
+    }
+
     return "Explain the gruntwork you'd like to eliminate";
+  }
+
+  get shouldShowTemplateSuggestions(): boolean {
+    return (
+      workflowFilesStore.allFilesApproved &&
+      this.messages.length === 0 &&
+      !this.isWaitingForResponse &&
+      !this.isWaitingForFileApproval
+    );
   }
 
   // Actions
@@ -71,6 +96,16 @@ class WorkflowChatStore {
 
   clearMessages() {
     this.messages = [];
+  }
+
+  registerInputFocus(callback: () => void) {
+    this.inputFocusCallback = callback;
+  }
+
+  focusInput() {
+    if (this.inputFocusCallback) {
+      this.inputFocusCallback();
+    }
   }
 }
 

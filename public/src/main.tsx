@@ -8,6 +8,7 @@ import '@fontsource/science-gothic/600.css';
 
 import '@mantine/core/styles.css';
 import '@mantine/charts/styles.css';
+import '@mantine/carousel/styles.css';
 
 import './index.css';
 import { MantineProvider } from '@mantine/core';

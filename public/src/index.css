@@ -51,7 +51,8 @@ h6 {
     var(--app-theme-color-base-b);
 
   --app-theme-color-on: rgba(var(--app-theme-color-base), 1);
-  --app-theme-color-transulcent-25: rgba(var(--app-theme-color-base), 0.25);
+  --app-theme-color-translucent-50: rgba(var(--app-theme-color-base), 0.5);
+  --app-theme-color-translucent-25: rgba(var(--app-theme-color-base), 0.25);
   --app-theme-color-translucent-10: rgba(var(--app-theme-color-base), 0.1);
   --app-theme-color-off: rgba(var(--app-theme-color-base), 0);
 

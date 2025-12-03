@@ -4,6 +4,7 @@ import { Flex, ScrollArea } from '@mantine/core';
 import workflowChatStore from '../../../stores/workflow-creator/workflowChatStore';
 import ChatMessage from './ChatMessage';
 import MessageLoader from './MessageLoader';
+import OnboardingAlert from './OnboardingAlert';
 
 const MessagesList = observer(() => {
   const scrollViewportRef = useRef<HTMLDivElement>(null);
@@ -19,6 +20,7 @@ const MessagesList = observer(() => {
 
   return (
     <ScrollArea viewportRef={scrollViewportRef} h='100%'>
+      <OnboardingAlert />
       <Flex h='100%' direction='column' gap='md'>
         {workflowChatStore.messages.map((msg) => (
           <ChatMessage key={msg.id} message={msg} />

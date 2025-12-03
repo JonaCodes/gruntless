@@ -5,12 +5,13 @@
 }
 
 .userMessage {
-  background: linear-gradient(
+  /* background: linear-gradient(
     135deg,
-    var(--app-theme-shade-1) 0%,
-    var(--app-theme-shade-6) 100%
-  );
-  color: white;
+    var(--app-theme-color-translucent-50) 0%,
+    var(--app-theme-color-translucent-25) 100%
+  ); */
+  background-color: #29339b;
+  color: #f1fec6;
   margin-left: auto;
   border-bottom-right-radius: 0;
 }
@@ -28,4 +29,8 @@
 
 textarea {
   scrollbar-width: none;
+}
+
+textarea:focus {
+  --input-bd: var(--app-theme-color-translucent-50) !important;
 }

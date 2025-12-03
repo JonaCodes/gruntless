@@ -1,0 +1,3 @@
+.suggestionButton:hover {
+  color: var(--app-theme-shade-6);
+}
