@@ -5,4 +5,5 @@ export interface WorkflowMessage {
   role: WorkflowMessageRole;
   content: string;
   timestamp: Date;
+  linkTo?: string; // Optional React Router link destination
 }

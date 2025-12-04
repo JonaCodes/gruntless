@@ -53,12 +53,29 @@ const FilePreviewSection = observer(() => {
 
           const shouldDisable = isExtracting || isError;
 
+          const extract = workflowFilesStore.extractedFiles[file.name];
+          const pageCount = extract?.page_count;
+          const pageCountString = `${pageCount} page${pageCount !== 1 ? 's' : ''}`;
+
+          const pageCountJSX = pageCount ? (
+            <span
+              style={{
+                fontSize: '0.8rem',
+                color: 'var(--mantine-color-dark-2)',
+              }}
+            >
+              ({pageCountString})
+            </span>
+          ) : (
+            ''
+          );
+
           return (
             <Carousel.Slide key={file.name}>
               <Stack gap='xs'>
                 <Flex align='center' justify='space-between'>
                   <Text c={'var(--mantine-color-gray-1)'} fw={600}>
-                    {file.name}
+                    {file.name} {pageCountJSX}
                   </Text>
                   {isApproved && (
                     <Badge color='green' variant='light'>

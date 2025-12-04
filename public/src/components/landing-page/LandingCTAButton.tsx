@@ -22,7 +22,7 @@ export default function LandingCTAButton({
     sendEvent(EVENT_NAMES.CTA_BUTTON_CLICK, { message });
 
     open(
-      'https://forms.monday.com/forms/32dc84224fa2cb949d81a206c1d6722d?r=euc1',
+      'https://forms.monday.com/forms/d97fb4706e924e8ccf91f9c197cffcf0?r=euc1',
       '_blank'
     );
   };

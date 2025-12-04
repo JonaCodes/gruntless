@@ -95,7 +95,7 @@ const OnboardingAlert = observer(() => {
 
   const alertContent = getAlertContent();
   const alertColor = !workflowFilesStore.hasFiles
-    ? 'orange.5'
+    ? 'blue.5'
     : !workflowFilesStore.allFilesApproved
       ? 'red.5'
       : 'green.5';

@@ -20,8 +20,13 @@ const FileUploadField = ({ field, files, onDrop }: FileUploadFieldProps) => {
         h={120}
         className={classes.dropzoneArea}
       >
-        <Flex align='center' justify='center' gap='xs' h={120}>
-          <IconUpload stroke={1.5} color='var(--mantine-color-dimmed)' />
+        <Flex
+          align='center'
+          justify='center'
+          gap='xs'
+          h={120}
+          direction={'column'}
+        >
           {files && files.length > 0 ? (
             <Text size='sm' ta='center'>
               {files.map((f) => f.name).join(', ')}
@@ -31,6 +36,7 @@ const FileUploadField = ({ field, files, onDrop }: FileUploadFieldProps) => {
               Drag files here or click to browse
             </Text>
           )}
+          <IconUpload stroke={1.5} color='var(--mantine-color-dimmed)' />
         </Flex>
       </Dropzone>
     </div>

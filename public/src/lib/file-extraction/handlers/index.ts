@@ -1,10 +1,11 @@
 import { CSVHandler } from './csv';
+import { PDFHandler } from './pdf';
 import type { FileType, FileHandler } from '../types';
 
 const handlers: Record<FileType, FileHandler> = {
   csv: new CSVHandler(),
   xlsx: null as any, // TODO: Implement
-  pdf: null as any, // TODO: Implement
+  pdf: new PDFHandler(),
 };
 
 export function getFileType(filename: string): FileType | null {

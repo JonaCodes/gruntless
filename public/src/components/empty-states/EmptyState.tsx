@@ -30,7 +30,7 @@ const messages: Record<string, Message> = {
     subtitle: 'Make sure you',
     linkText: 'join the waitlist',
     linkHref:
-      'https://forms.monday.com/forms/32dc84224fa2cb949d81a206c1d6722d?r=euc1',
+      'https://forms.monday.com/forms/d97fb4706e924e8ccf91f9c197cffcf0?r=euc1',
     imgUrl: 'v1744213504/ai-book-editor/working-hard-dragon.png',
     isExtenalLink: true,
   },

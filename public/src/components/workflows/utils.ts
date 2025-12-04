@@ -8,6 +8,10 @@ export const getBadgeColor = (category: WorkflowCategory): string => {
       return 'green';
     case 'Internal':
       return 'yellow';
+    case 'Legal':
+      return 'orange';
+    case 'Marketing':
+      return 'pink';
     default:
       return 'gray';
   }

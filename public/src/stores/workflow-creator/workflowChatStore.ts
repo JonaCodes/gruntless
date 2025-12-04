@@ -84,12 +84,13 @@ class WorkflowChatStore {
     this.messages.push(message);
   }
 
-  addAssistantMessage(content: string) {
+  addAssistantMessage(content: string, linkTo?: string) {
     const message: WorkflowMessage = {
       id: crypto.randomUUID(),
       role: WORKFLOW_MESSAGE_ROLE.ASSISTANT,
       content,
       timestamp: new Date(),
+      ...(linkTo && { linkTo }),
     };
     this.messages.push(message);
   }

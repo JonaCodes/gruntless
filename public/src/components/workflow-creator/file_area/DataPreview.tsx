@@ -4,6 +4,7 @@ import { EXTRACTION_STATUS } from '@shared/types/workflows';
 import LoadingState from './previews/LoadingState';
 import ErrorState from './previews/ErrorState';
 import CsvPreview from './previews/CsvPreview';
+import PdfPreview from './previews/PdfPreview';
 
 interface DataPreviewProps {
   fileName: string;
@@ -29,7 +30,7 @@ const DataPreview = observer(({ fileName }: DataPreviewProps) => {
       case 'xlsx':
         return <CsvPreview extract={extract} />;
       case 'pdf':
-        return <ErrorState error='PDF preview not yet implemented' />;
+        return <PdfPreview extract={extract} />;
       default:
         return (
           <ErrorState error={`Unsupported file type: ${extract.fileType}`} />

@@ -35,6 +35,8 @@ const FileUploadSection = observer(() => {
           columns: extraction.columns,
           sample_rows: extraction.rows,
           row_count: extraction.rowCount,
+          markdown_content: extraction.markdownContent,
+          page_count: extraction.pageCount,
         };
 
         workflowFilesStore.setExtractedFiles({

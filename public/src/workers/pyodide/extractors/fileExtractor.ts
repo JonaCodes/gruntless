@@ -1,12 +1,19 @@
 import { PyodideInterface } from 'pyodide';
 import { extractCsv } from './csvExtractor';
+import { extractPdf } from './pdfExtractor';
 
 export const extractFilePreview = async (
   file: { name: string; content: ArrayBuffer },
   sampleRows: number,
   pyodide: PyodideInterface,
   ensureDir: (dir: string) => void
-): Promise<{ columns: string[]; rows: string[][]; rowCount: number }> => {
+): Promise<{
+  columns?: string[];
+  rows?: string[][];
+  rowCount?: number;
+  markdownContent?: string;
+  pageCount?: number;
+}> => {
   const fileExtension = file.name.split('.').pop()?.toLowerCase();
 
   // Mount file to virtual filesystem
@@ -21,7 +28,10 @@ export const extractFilePreview = async (
       case 'csv':
         result = await extractCsv(filePath, sampleRows, pyodide);
         break;
-      // Future: xlsx, pdf handlers
+      case 'pdf':
+        result = await extractPdf(filePath, pyodide);
+        break;
+      // Future: xlsx handler
       default:
         throw new Error(`Unsupported file type: ${fileExtension}`);
     }

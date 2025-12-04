@@ -1,4 +1,10 @@
-export type WorkflowCategory = 'Sales' | 'Finance' | 'Internal';
+// TODO: remove and let user create their own
+export type WorkflowCategory =
+  | 'Sales'
+  | 'Finance'
+  | 'Internal'
+  | 'Legal'
+  | 'Marketing';
 
 export type WorkflowFieldType =
   | 'multi_file_upload'
@@ -56,7 +62,11 @@ export type ExtractionStatus =
 export interface FileExtract {
   fileName: string;
   fileType: FileType;
+  // CSV/XLSX fields
   columns?: string[];
   sample_rows?: string[][];
   row_count?: number;
+  // PDF fields
+  markdown_content?: string;
+  page_count?: number;
 }
