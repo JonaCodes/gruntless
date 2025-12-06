@@ -10,6 +10,9 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react()],
+    worker: {
+      format: 'es',
+    },
     server: {
       proxy: {
         '^/auth/(?!callback).*': {
