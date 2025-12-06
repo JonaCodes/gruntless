@@ -113,7 +113,7 @@ const SignUpOrLogin = observer(() => {
       <Paper shadow='md' p='xl' radius='md' w='100%' maw={400}>
         <Stack>
           <Text size='md' ta='center'>
-            All stories begin with a single <s>word</s> sign-in
+            Time to put an end to gruntwork
             {/* {isSignUp ? 'Create an account' : 'Welcome back'} */}
           </Text>
 

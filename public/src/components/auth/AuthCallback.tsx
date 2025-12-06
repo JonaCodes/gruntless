@@ -27,11 +27,9 @@ const AuthCallback = () => {
       try {
         const userData = await getUserData();
         userStore.setUser(userData);
-        await appStore.loadLatestDraft();
+        userStore.setIsLoadingUser(false);
 
-        appStore.latestDraft?.id
-          ? navigate(`/dashboard/${appStore.latestDraft.id}`)
-          : navigate('/draft');
+        navigate('/workflows');
       } catch (err: any) {
         console.error('Error syncing user:', err.message);
         navigate('/oops/signin');

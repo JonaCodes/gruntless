@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 
 import Landing from './components/landing-page/Landing';
 import navClasses from './components/navbar/navbar.module.css';
-// import ProtectedRoute from './components/auth/ProtectedRoute';
+import ProtectedRoute from './components/auth/ProtectedRoute';
 import AuthCallback from './components/auth/AuthCallback';
 import appStore from './stores/appStore';
 import userStore from './stores/userStore';
@@ -48,7 +48,17 @@ const App = observer(() => {
     appStore.setIsSmall(isSmall);
   }, [isSmall]);
 
+  const publicRoutes = ['/', '/about', '/oops', '/auth/callback'];
+  const isPublicRoute =
+    publicRoutes.includes(location.pathname) ||
+    location.pathname.startsWith('/oops/');
+
   useEffect(() => {
+    if (isPublicRoute) {
+      userStore.setIsLoadingUser(false);
+      return;
+    }
+
     appStore.loadSession().then(async () => {
       userStore.setIsLoadingUser(true);
 
@@ -61,7 +71,7 @@ const App = observer(() => {
       userStore.setUser(userData);
       userStore.setIsLoadingUser(false);
     });
-  }, []);
+  }, [location.pathname, isPublicRoute]);
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
@@ -140,9 +150,33 @@ const App = observer(() => {
             <Route path='/oops/:section?' element={<EmptyState />} />
 
             <Route path='/about' element={<About />} />
-            <Route path='/workflows' element={<Workflows />} />
-            <Route path='/workflows/new' element={<WorkflowCreator />} />
-            <Route path='/workflows/:id/edit' element={<WorkflowCreator />} />
+
+            {/* Protected Routes - Require Authentication */}
+            <Route
+              path='/workflows'
+              element={
+                <ProtectedRoute>
+                  <Workflows />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/workflows/new'
+              element={
+                <ProtectedRoute>
+                  <WorkflowCreator />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='/workflows/:id/edit'
+              element={
+                <ProtectedRoute>
+                  <WorkflowCreator />
+                </ProtectedRoute>
+              }
+            />
+
             <Route path='/auth/callback' element={<AuthCallback />} />
 
             {/* Protected Routes */}
