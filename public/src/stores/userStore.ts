@@ -4,8 +4,8 @@ class UserStore {
   isLoadingUser = true;
   user: {
     id: number;
-    full_name?: string;
-    avatar_url?: string;
+    fullName?: string;
+    avatarUrl?: string;
   } | null = null;
 
   constructor() {

@@ -57,6 +57,11 @@ export const getCurrentUser = async (
   res: Response
 ): Promise<void> => {
   try {
+    if (req.user) {
+      res.json(req.user);
+      return;
+    }
+
     const token = req.headers.authorization?.split(' ')[1];
     if (!token) {
       res.status(401).json({ error: 'No token provided' });

@@ -19,13 +19,13 @@ const NavAvatar = observer(() => {
   return (
     <Flex justify={'center'} align={'end'} gap={'xs'}>
       <Avatar
-        src={user?.avatar_url}
-        alt={user?.full_name}
-        name={user?.full_name}
+        src={user?.avatarUrl}
+        alt={user?.fullName}
+        name={user?.fullName}
         size={'md'}
       />
       <Flex direction={'column'}>
-        <Text size='sm'>{user?.full_name}</Text>
+        <Text size='sm'>{user?.fullName}</Text>
         <Text
           size='xs'
           c={'dimmed'}

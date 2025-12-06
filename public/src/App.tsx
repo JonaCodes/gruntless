@@ -59,18 +59,26 @@ const App = observer(() => {
       return;
     }
 
-    appStore.loadSession().then(async () => {
-      userStore.setIsLoadingUser(true);
+    userStore.setIsLoadingUser(true);
+    const loadUserData = async () => {
+      await appStore.loadSession();
+
+      if (!appStore.session) {
+        userStore.setIsLoadingUser(false);
+        return;
+      }
 
       const userData = await getUserData();
-      if (!userData) {
+      if (!userData || !userData.id) {
         userStore.setIsLoadingUser(false);
         return;
       }
 
       userStore.setUser(userData);
       userStore.setIsLoadingUser(false);
-    });
+    };
+
+    loadUserData();
   }, [location.pathname, isPublicRoute]);
 
   useEffect(() => {

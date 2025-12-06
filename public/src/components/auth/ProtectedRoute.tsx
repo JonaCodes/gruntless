@@ -2,28 +2,32 @@ import { useAuth } from '../../hooks/useAuth';
 import SignUpOrLogin from './SignUpOrLogin';
 import { Loader } from '@mantine/core';
 import userStore from '../../stores/userStore';
+import { observer } from 'mobx-react-lite';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
   requiredUserId?: number;
 }
 
-const ProtectedRoute = ({ children, requiredUserId }: ProtectedRouteProps) => {
-  const { isAuthenticated } = useAuth();
-  if (isAuthenticated === null) {
-    return <Loader />;
-  }
+const ProtectedRoute = observer(
+  ({ children, requiredUserId }: ProtectedRouteProps) => {
+    const { isAuthenticated } = useAuth();
 
-  if (!isAuthenticated || !userStore.user) {
-    return <SignUpOrLogin />;
-  }
+    if (isAuthenticated === null || userStore.isLoadingUser) {
+      return <Loader />;
+    }
 
-  if (requiredUserId && userStore.user.id !== requiredUserId) {
-    window.location.href = '/oops/forbidden';
-    return;
-  }
+    if (!isAuthenticated || !userStore.user) {
+      return <SignUpOrLogin />;
+    }
 
-  return <>{children}</>;
-};
+    if (requiredUserId && userStore.user.id !== requiredUserId) {
+      window.location.href = '/oops/forbidden';
+      return;
+    }
+
+    return <>{children}</>;
+  }
+);
 
 export default ProtectedRoute;

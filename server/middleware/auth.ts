@@ -31,6 +31,7 @@ export const requireAuth = async (
     req.user = user;
     next();
   } catch (error: any) {
+    console.error('Auth middleware error:', error.message, error);
     res.status(401).json({ error: error.message });
   }
 };
