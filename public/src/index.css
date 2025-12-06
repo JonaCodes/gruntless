@@ -1,5 +1,18 @@
-* {
+/* Ensure fonts use swap display for smoother loading */
+@font-face {
   font-family: 'Figtree';
+  font-display: swap;
+  src: local('Figtree');
+}
+
+@font-face {
+  font-family: 'Science Gothic';
+  font-display: swap;
+  src: local('Science Gothic');
+}
+
+* {
+  font-family: 'Figtree', system-ui, sans-serif;
 }
 
 h1,
@@ -8,7 +21,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Science Gothic' !important;
+  font-family: 'Science Gothic', system-ui, sans-serif !important;
 }
 
 *,

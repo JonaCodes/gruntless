@@ -13,6 +13,31 @@ export default defineConfig(({ mode }) => {
     worker: {
       format: 'es',
     },
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            // Core React runtime
+            'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+            // UI framework
+            'vendor-mantine': [
+              '@mantine/core',
+              '@mantine/hooks',
+              '@mantine/form',
+              '@mantine/charts',
+              '@mantine/carousel',
+              '@mantine/dropzone',
+            ],
+            // State management
+            'vendor-mobx': ['mobx', 'mobx-react-lite'],
+            // Icons (can be large)
+            'vendor-icons': ['@tabler/icons-react'],
+            // Supabase client
+            'vendor-supabase': ['@supabase/supabase-js'],
+          },
+        },
+      },
+    },
     server: {
       proxy: {
         '^/auth/(?!callback).*': {
