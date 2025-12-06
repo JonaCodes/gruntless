@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "pnpm -r run dev",
     "build": "cd public && pnpm install --frozen-lockfile && pnpm run build && cd ../server && pnpm install --frozen-lockfile && pnpm run build",
-    "start": "node server/dist/server.cjs"
+    "start": "node server/dist/server.cjs",
+    "migrate": "cd server && npx sequelize-cli db:migrate --config config/config.cjs"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
