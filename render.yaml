@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: gruntless
+    env: node
+    region: frankfurt
+    plan: starter
+    buildCommand: pnpm install && pnpm run build
+    startCommand: pnpm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DB_CONNECTION_STRING
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: VITE_SUPABASE_URL
+        sync: false
+      - key: VITE_SUPABASE_ANON_KEY
+        sync: false
+      - key: ALPHA_EMAILS
+        sync: false

@@ -42,7 +42,7 @@ export const requireAdmin = async (
 ) => {
   if (
     req.user?.id !== APP_ADMIN_ID ||
-    req.user?.email !== process.env.ALPHA_EMAILS?.split(',')[0]
+    req.user?.email !== process.env.BETA_EMAILS?.split(',')[0]
   ) {
     return res.status(403).json({ error: 'Nope.' });
   }

@@ -66,6 +66,38 @@ export const workflows: any[] = [
   },
   {
     metadata: {
+      id: 'zip-filename-extractor-v1',
+      name: 'ZIP Filename Extractor',
+      description:
+        'Extracts file names, paths, and sizes from ZIP archives into a spreadsheet.',
+      category: 'Internal',
+      lastRun: new Date(Date.now() - 1 * 60 * 1000),
+      numRuns: 1,
+      numSaved: 0.5,
+    },
+    fields: [
+      {
+        id: 'zip_files',
+        type: 'multi_file_upload',
+        label: 'Upload ZIP Files',
+        accept: ['application/zip'],
+        min_files: 1,
+        max_files: 20,
+      },
+    ],
+    actionButton: {
+      label: 'Extract Filenames',
+    },
+    execution: {
+      engine: 'pyodide',
+      dependencies: ['pandas', 'openpyxl'],
+      outputFilename: 'zip_contents.xlsx',
+      script:
+        "import pandas as pd\nimport os\nimport zipfile\n\nFIELD_DIR = '/input_files/zip_files'\n\n# Find ZIP files\nfiles = [f for f in os.listdir(FIELD_DIR) if f.lower().endswith('.zip')]\n\nif len(files) < 1:\n    raise ValueError('Please upload at least 1 ZIP file')\n\nprint(f'Processing {len(files)} ZIP file(s)...')\n\nresults = []\n\nfor filename in files:\n    filepath = os.path.join(FIELD_DIR, filename)\n    \n    with zipfile.ZipFile(filepath, 'r') as zf:\n        for info in zf.infolist():\n            # Skip directories\n            if info.is_dir():\n                continue\n            results.append({\n                'zip_file': filename,\n                'file_name': os.path.basename(info.filename),\n                'file_path': info.filename,\n                'size_bytes': info.file_size\n            })\n    \n    print(f'Processed: {filename}')\n\n# Create output DataFrame\ndf = pd.DataFrame(results)\n\noutput_path = '/output/zip_contents.xlsx'\ndf.to_excel(output_path, index=False)\nprint(f'\\nExtracted {len(results)} file(s) from {len(files)} ZIP archive(s).')",
+    },
+  },
+  {
+    metadata: {
       id: 'brand-watermarker',
       category: 'Marketing',
       name: 'Corporate Brand Enforcer',

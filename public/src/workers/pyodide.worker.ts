@@ -36,9 +36,11 @@ type WorkerResponse =
         | { output: Blob | null }
         | {
             extraction: {
-              columns: string[];
-              rows: string[][];
-              rowCount: number;
+              columns?: string[];
+              rows?: string[][];
+              rowCount?: number;
+              markdownContent?: string;
+              pageCount?: number;
             };
             requestId?: string;
           };

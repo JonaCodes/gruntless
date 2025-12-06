@@ -25,7 +25,7 @@ export const makeRequest = async (
     return { ...response, data: response.data || {} };
   } catch (error: any) {
     if (error.status === 403) {
-      if (error.data?.reason === 'ALPHA_ONLY') {
+      if (error.data?.reason === 'BETA_ONLY') {
         return (window.location.href = '/oops/alpha');
       }
       return (window.location.href = '/oops/forbidden');
