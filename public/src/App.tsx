@@ -55,31 +55,29 @@ const App = observer(() => {
 
   useEffect(() => {
     if (isPublicRoute) {
-      userStore.setIsLoadingUser(false);
       return;
     }
 
-    userStore.setIsLoadingUser(true);
-    const loadUserData = async () => {
+    const initAuth = async () => {
+      // Load session into appStore (needed by getUserData)
       await appStore.loadSession();
 
-      if (!appStore.session) {
-        userStore.setIsLoadingUser(false);
-        return;
-      }
+      if (!appStore.session) return;
+      if (userStore.user) return;
 
-      const userData = await getUserData();
-      if (!userData || !userData.id) {
+      userStore.setIsLoadingUser(true);
+      try {
+        const userData = await getUserData();
+        if (userData?.id) {
+          userStore.setUser(userData);
+        }
+      } finally {
         userStore.setIsLoadingUser(false);
-        return;
       }
-
-      userStore.setUser(userData);
-      userStore.setIsLoadingUser(false);
     };
 
-    loadUserData();
-  }, [location.pathname, isPublicRoute]);
+    initAuth();
+  }, []);
 
   useEffect(() => {
     window.scrollTo({ top: 0 });

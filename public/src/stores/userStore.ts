@@ -1,7 +1,7 @@
 import { makeAutoObservable } from 'mobx';
 
 class UserStore {
-  isLoadingUser = true;
+  isLoadingUser = false;
   user: {
     id: number;
     fullName?: string;
