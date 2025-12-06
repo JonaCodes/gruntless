@@ -20,7 +20,7 @@ export default class User extends Model {
           autoIncrement: true,
           primaryKey: true,
         },
-        account_id: {
+        accountId: {
           type: DataTypes.INTEGER,
           allowNull: false,
           references: {

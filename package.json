@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "pnpm -r run dev",
+    "dev": "pnpm -r --stream run dev",
     "build": "cd public && pnpm install --frozen-lockfile && pnpm run build && cd ../server && pnpm install --frozen-lockfile && pnpm run build",
     "start": "node server/dist/server.cjs",
     "migrate": "cd server && npx sequelize-cli db:migrate --config config/config.cjs"

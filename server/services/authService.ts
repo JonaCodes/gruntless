@@ -1,5 +1,6 @@
 import { supabase } from '../utils/general';
 import User from '../models/user';
+import { ensureUserExists } from '../utils/authHelpers';
 
 export class AuthService {
   static async signUpWithEmail(email: string, password: string) {
@@ -59,18 +60,8 @@ export class AuthService {
     if (authError) throw authError;
     if (!authData.user) throw new Error('No user data returned');
 
-    // Update or create user in our database
-    const [user] = await User.findOrCreate({
-      where: { supabaseId: authData.user.id },
-      defaults: {
-        email: authData.user.email!,
-        fullName: authData.user.user_metadata.full_name,
-        avatarUrl: authData.user.user_metadata.avatar_url,
-        provider,
-      },
-    });
+    const user = await ensureUserExists(authData.user, provider);
 
-    await user.update({ lastLogin: new Date() });
     return user;
   }
 
@@ -88,18 +79,8 @@ export class AuthService {
     if (error) throw error;
     if (!authUser) return null;
 
-    const [user] = await User.findOrCreate({
-      where: { supabaseId: authUser.id },
-      defaults: {
-        email: authUser.email!,
-        fullName: authUser.user_metadata.full_name,
-        avatarUrl: authUser.user_metadata.avatar_url,
-        provider: authUser.app_metadata.provider,
-        lastLogin: new Date(),
-      },
-    });
+    const user = await ensureUserExists(authUser);
 
-    await user.update({ lastLogin: new Date() });
     return user;
   }
 }
