@@ -19,5 +19,5 @@ services:
         sync: false
       - key: VITE_SUPABASE_ANON_KEY
         sync: false
-      - key: ALPHA_EMAILS
+      - key: BETA_EMAILS
         sync: false

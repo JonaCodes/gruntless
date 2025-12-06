@@ -29,7 +29,6 @@ export default defineConfig(({ mode }) => {
       fs: {
         strict: false,
       },
-      allowedHosts: ['semidiaphanously-chondritic-robbie.ngrok-free.dev'],
     },
     resolve: {
       alias: {

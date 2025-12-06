@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === 'production') {
 const execPromise = util.promisify(exec);
 const runMigrations = async (): Promise<void> => {
   try {
-    const { stdout } = await execPromise('npm run migrate');
+    const { stdout } = await execPromise('pnpm run migrate');
     console.log(`Migration output: ${stdout}`);
   } catch (error) {
     console.error(`Error running migrations: ${(error as Error).message}`);

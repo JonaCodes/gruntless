@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "pnpm -r run dev",
     "build": "cd public && pnpm install --frozen-lockfile && pnpm run build && cd ../server && pnpm install --frozen-lockfile && pnpm run build",
-    "start": "pnpm run start -w server"
+    "start": "node server/dist/server.cjs"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
