@@ -1,19 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
 import { AuthService } from '../services/authService';
-import User from 'models/user';
-import { APP_ADMIN_ID } from '@shared/consts/general';
+
+const ADMIN_EMAIL = 'jonathanfarache@gmail.com';
 
 export const requireAuth = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  if (process.env.NODE_ENV === 'development') {
-    const user = await User.findOne({ where: { id: 1 } });
-    req.user = user || undefined;
-    return next();
-  }
-
   try {
     const token = req.headers.authorization?.split(' ')[1];
     if (!token) {
@@ -41,11 +35,8 @@ export const requireAdmin = async (
   res: Response,
   next: NextFunction
 ) => {
-  if (
-    req.user?.id !== APP_ADMIN_ID ||
-    req.user?.email !== process.env.BETA_EMAILS?.split(',')[0]
-  ) {
-    return res.status(403).json({ error: 'Nope.' });
+  if (req.user?.email !== ADMIN_EMAIL) {
+    return res.status(403).json({ error: 'Forbidden: Admin access required' });
   }
 
   next();

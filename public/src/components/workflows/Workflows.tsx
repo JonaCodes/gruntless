@@ -1,7 +1,7 @@
-import { Title, ActionIcon, Flex } from '@mantine/core';
+import { useEffect } from 'react';
+import { Title, ActionIcon, Flex, Loader, Center, Text } from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';
 import { observer } from 'mobx-react-lite';
-import { workflows } from './workflowsData';
 import WorkflowCard from './workflow_card/WorkflowCard';
 import { STYLES } from 'public/src/consts/styling';
 import classes from './workflows.module.css';
@@ -12,9 +12,25 @@ import { useNavigate } from 'react-router-dom';
 const Workflows = observer(() => {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    appStore.loadWorkflows();
+  }, []);
+
   const handleCreateWorkflow = () => {
     navigate('/workflows/new');
   };
+
+  if (appStore.isLoadingWorkflows) {
+    return <Loader />;
+  }
+
+  if (appStore.workflowsError) {
+    return (
+      <Center h={200}>
+        <Text c='red'>{appStore.workflowsError}</Text>
+      </Center>
+    );
+  }
 
   return (
     <Flex pt={'xl'} direction='column'>
@@ -26,7 +42,7 @@ const Workflows = observer(() => {
         className={gridClasses.workflowGrid}
         data-workflow-navbar-open={appStore.workflowNavbarOpened}
       >
-        {workflows.map((workflow) => (
+        {appStore.workflows.map((workflow) => (
           <WorkflowCard key={workflow.metadata.id} workflow={workflow} />
         ))}
       </div>

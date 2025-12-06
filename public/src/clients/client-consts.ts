@@ -13,6 +13,7 @@ export const ENDPOINTS = {
   WORKFLOWS: {
     LIST: '/api/workflows',
     CREATE: '/api/workflows',
+    ADMIN_SEED: '/api/workflows/admin/seed',
     GET: (id: number) => `/api/workflows/${id}`,
     SEND_MESSAGE: (id: number) => `/api/workflows/${id}/messages`,
     APPROVE: (id: number) => `/api/workflows/${id}/approve`,

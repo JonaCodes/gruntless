@@ -26,6 +26,7 @@ import Workflows from './components/workflows/Workflows';
 import WorkflowNavbar from './components/workflows/workflow/WorkflowNavbar';
 import workflowsNavbarClasses from './components/workflows/workflowsNavbar.module.css';
 import WorkflowCreator from './components/workflow-creator/WorkflowCreator';
+import AdminSeedWorkflow from './components/admin/AdminSeedWorkflow';
 
 const App = observer(() => {
   const isSmall = useMediaQuery('(max-width: 768px)');
@@ -179,6 +180,15 @@ const App = observer(() => {
               element={
                 <ProtectedRoute>
                   <WorkflowCreator />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path='/admin/seed-workflow'
+              element={
+                <ProtectedRoute>
+                  <AdminSeedWorkflow />
                 </ProtectedRoute>
               }
             />

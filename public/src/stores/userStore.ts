@@ -4,6 +4,8 @@ class UserStore {
   isLoadingUser = false;
   user: {
     id: number;
+    email?: string;
+    accountId?: number;
     fullName?: string;
     avatarUrl?: string;
   } | null = null;

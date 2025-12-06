@@ -17,6 +17,8 @@ export interface WorkflowField {
   label: string;
   placeholder?: string;
   accept?: string[]; // MIME types for file uploads
+  min_files?: number;
+  max_files?: number;
 }
 
 export interface WorkflowMetadata {
@@ -35,7 +37,6 @@ export interface WorkflowAction {
 }
 
 export interface WorkflowExecution {
-  engine: 'pyodide';
   dependencies: string[];
   outputFilename: string;
   script: string;
@@ -69,4 +70,13 @@ export interface FileExtract {
   // PDF fields
   markdown_content?: string;
   page_count?: number;
+}
+
+export interface SeedWorkflowInput {
+  name: string;
+  description: string;
+  actionButtonLabel: string;
+  estSavedMinutes?: number;
+  fields: WorkflowField[];
+  execution: WorkflowExecution;
 }

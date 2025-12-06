@@ -7,8 +7,16 @@ export default class Workflow extends Model {
   public name!: string | null;
   public description!: string | null;
   public label!: string | null;
+  // TODO: category will be FK to workflow_categories table
+  public lastRun!: Date | null;
+  public numRuns!: number;
+  public actionButtonLabel!: string | null;
+  public estSavedMinutes!: number | null;
   public createdAt!: Date;
   public updatedAt!: Date;
+
+  // Association types
+  public versions?: any[];
 
   static initialize(sequelize: Sequelize) {
     super.init(
@@ -36,6 +44,23 @@ export default class Workflow extends Model {
         },
         label: {
           type: DataTypes.STRING,
+          allowNull: true,
+        },
+        lastRun: {
+          type: DataTypes.DATE,
+          allowNull: true,
+        },
+        numRuns: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          defaultValue: 0,
+        },
+        actionButtonLabel: {
+          type: DataTypes.STRING,
+          allowNull: true,
+        },
+        estSavedMinutes: {
+          type: DataTypes.INTEGER,
           allowNull: true,
         },
       },

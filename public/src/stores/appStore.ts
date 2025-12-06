@@ -1,5 +1,7 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { supabase } from '../lib/supabase';
+import { Workflow } from '@shared/types/workflows';
+import { fetchWorkflows } from '../clients/workflows-client';
 
 class AppStore {
   isLoadingSignIn = false;
@@ -7,6 +9,9 @@ class AppStore {
   isSmall = false;
   selectedWorkflowId: string | null = null;
   workflowNavbarOpened = false;
+  workflows: Workflow[] = [];
+  isLoadingWorkflows = false;
+  workflowsError: string | null = null;
 
   constructor() {
     makeAutoObservable(this);
@@ -43,6 +48,27 @@ class AppStore {
         this.selectedWorkflowId = null;
       });
     }, 200);
+  }
+
+  async loadWorkflows() {
+    this.isLoadingWorkflows = true;
+    this.workflowsError = null;
+
+    try {
+      const data = await fetchWorkflows();
+      runInAction(() => {
+        this.workflows = data;
+      });
+    } catch (err: any) {
+      console.error('Failed to load workflows:', err);
+      runInAction(() => {
+        this.workflowsError = err.message || 'Failed to load workflows';
+      });
+    } finally {
+      runInAction(() => {
+        this.isLoadingWorkflows = false;
+      });
+    }
   }
 
   get sessionAccessToken() {

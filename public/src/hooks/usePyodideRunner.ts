@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { FileWithPath } from '@mantine/dropzone';
+import { toJS } from 'mobx';
 import {
   WORKER_MESSAGES,
   EXECUTION_STATUS,
@@ -76,7 +77,8 @@ export const usePyodideRunner = (options: PyodideRunnerOptions = {}) => {
 
     const unsubscribe = manager.subscribe(handleMessage);
 
-    manager.ensureInitialized(options.dependencies || []).then(() => {
+    // Because mobx is used to store the dependencies (e.g workflows), we need to convert it to a js array to pass it to the worker
+    manager.ensureInitialized(toJS(options.dependencies || [])).then(() => {
       isReadyRef.current = true;
     });
 
