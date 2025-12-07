@@ -5,6 +5,7 @@ import { Loader } from '@mantine/core';
 import appStore from 'public/src/stores/appStore';
 import userStore from '../../stores/userStore';
 import { getUserData } from 'public/src/clients/app-client';
+import { handlePendingShare } from 'public/src/services/shareService';
 
 const AuthCallback = () => {
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ const AuthCallback = () => {
         userStore.setUser(userData);
         userStore.setIsLoadingUser(false);
 
+        await handlePendingShare();
         navigate('/workflows');
       } catch (err: any) {
         console.error('Error syncing user:', err.message);

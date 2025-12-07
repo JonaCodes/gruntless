@@ -1,11 +1,22 @@
+import { Op } from 'sequelize';
 import Workflow from '../../models/workflow';
 import WorkflowVersion from '../../models/workflow_version';
+import WorkflowShare from '../../models/workflow_share';
 import { WORKFLOW_VERSION_STATUS } from '@shared/consts/workflows';
 import { transformToFrontendFormat } from '../../utils/workflowTransformer';
 
 export const getWorkflowsByUser = async (userId: number) => {
+  const sharedWorkflows = await WorkflowShare.findAll({
+    where: { sharedWith: userId },
+    attributes: ['workflowId'],
+  });
+
+  const sharedWorkflowIds = sharedWorkflows.map((share) => share.workflowId);
+
   const workflows = await Workflow.findAll({
-    where: { userId },
+    where: {
+      [Op.or]: [{ userId }, { id: { [Op.in]: sharedWorkflowIds } }],
+    },
     include: [
       {
         model: WorkflowVersion,

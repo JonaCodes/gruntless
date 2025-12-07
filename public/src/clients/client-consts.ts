@@ -19,4 +19,8 @@ export const ENDPOINTS = {
     APPROVE: (id: number) => `/api/workflows/${id}/approve`,
     EDIT: (id: number) => `/api/workflows/${id}/edit`,
   },
+  SHARES: {
+    CREATE: '/api/shares',
+    ACCEPT: '/api/shares/accept',
+  },
 };

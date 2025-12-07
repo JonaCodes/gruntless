@@ -25,6 +25,10 @@ class AppStore {
     this.isLoadingSignIn = isLoading;
   }
 
+  setIsLoadingWorkflows(isLoading: boolean) {
+    this.isLoadingWorkflows = isLoading;
+  }
+
   async loadSession() {
     const { data, error } = await supabase.auth.getSession();
     if (error) {
@@ -51,7 +55,7 @@ class AppStore {
   }
 
   async loadWorkflows() {
-    this.isLoadingWorkflows = true;
+    this.setIsLoadingWorkflows(true);
     this.workflowsError = null;
 
     try {
@@ -65,9 +69,7 @@ class AppStore {
         this.workflowsError = err.message || 'Failed to load workflows';
       });
     } finally {
-      runInAction(() => {
-        this.isLoadingWorkflows = false;
-      });
+      this.setIsLoadingWorkflows(false);
     }
   }
 
