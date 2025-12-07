@@ -35,14 +35,18 @@ export async function ensureUserExists(
       lastLogin: new Date(),
     });
   } else {
-    // Update existing user info
-    await user.update({
-      email: userInfo.email,
-      fullName: userInfo.fullName,
-      avatarUrl: userInfo.avatarUrl,
-      provider: userInfo.provider,
-      lastLogin: new Date(),
-    });
+    const tenMinutesAgo = new Date();
+    tenMinutesAgo.setMinutes(tenMinutesAgo.getMinutes() - 10);
+
+    if (user.lastLogin.getTime() < tenMinutesAgo.getTime()) {
+      await user.update({
+        email: userInfo.email,
+        fullName: userInfo.fullName,
+        avatarUrl: userInfo.avatarUrl,
+        provider: userInfo.provider,
+        lastLogin: new Date(),
+      });
+    }
   }
 
   return user;

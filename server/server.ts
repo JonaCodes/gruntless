@@ -46,9 +46,11 @@ const runMigrations = async (): Promise<void> => {
     await runMigrations();
     await sequelize.authenticate();
     console.log('Database connected.');
-    app.listen(PORT, () => {
+    const server = app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}.`);
     });
+
+    server.requestTimeout = 60_000;
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   }
