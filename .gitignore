@@ -25,3 +25,5 @@ dist-ssr
 
 *.docx
 *.env
+
+*.mcp.json

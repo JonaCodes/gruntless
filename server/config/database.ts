@@ -19,8 +19,21 @@ const sequelize = new Sequelize(
             require: true,
             rejectUnauthorized: false,
           },
+          connectTimeout: 20_000, // 20 seconds to establish initial connection
         }
       : {},
+    pool: {
+      max: 20,
+      min: 5,
+      acquire: 60_000,
+      idle: 30_000, // Max idle time before releasing (10s → 30s)
+      evict: 10_000, // Check for idle connections every 10s
+    },
+    retry: {
+      max: 3, // Retry up to 3 times
+      backoffBase: 1000, // Start with 1s delay
+      backoffExponent: 1.5, // Exponential backoff (1s, 1.5s, 2.25s)
+    },
   }
 );
 
