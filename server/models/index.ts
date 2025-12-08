@@ -7,6 +7,7 @@ import Workflow from './workflow';
 import WorkflowVersion from './workflow_version';
 import WorkflowMessage from './workflow_message';
 import WorkflowShare from './workflow_share';
+import WorkflowRun from './workflow_run';
 
 const models = {
   User,
@@ -17,6 +18,7 @@ const models = {
   WorkflowVersion,
   WorkflowMessage,
   WorkflowShare,
+  WorkflowRun,
 };
 
 Object.values(models).forEach((model) => {

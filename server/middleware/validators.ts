@@ -21,3 +21,19 @@ export const requireAccountId = (
   res: Response,
   next: NextFunction
 ) => validateNumberParam(req, res, next, 'accountId');
+
+export const validateWorkflowRunBody = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { success } = req.body;
+
+  if (typeof success !== 'boolean') {
+    return res.status(400).json({
+      error: 'Missing or invalid "success" field in request body',
+    });
+  }
+
+  next();
+};

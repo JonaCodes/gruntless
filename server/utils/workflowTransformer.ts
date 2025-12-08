@@ -18,17 +18,17 @@ interface WorkflowWithVersions {
   }>;
 }
 
-/**
- * Transforms a database Workflow model (with versions) into the frontend format
- */
+// Transforms a database Workflow model (with versions) into the frontend format
 export function transformToFrontendFormat(
-  workflow: WorkflowWithVersions
+  workflow: WorkflowWithVersions,
+  numRuns: number,
+  lastRun: string | null
 ): Workflow {
   const activeVersion = workflow.versions?.[0];
 
   // Calculate numSaved: numRuns * estSavedMinutes / 60 (convert to hours)
   const numSaved = workflow.estSavedMinutes
-    ? (workflow.numRuns * workflow.estSavedMinutes) / 60
+    ? (numRuns * workflow.estSavedMinutes) / 60
     : undefined;
 
   return {
@@ -37,8 +37,8 @@ export function transformToFrontendFormat(
       name: workflow.name || '',
       description: workflow.description || '',
       category: 'Internal', // TODO: Will come from FK to workflow_categories later
-      lastRun: workflow.lastRun,
-      numRuns: workflow.numRuns,
+      lastRun, // ISO string or null - frontend converts to Date at point of use
+      numRuns,
       numSaved,
     },
     fields: activeVersion?.fields || [],

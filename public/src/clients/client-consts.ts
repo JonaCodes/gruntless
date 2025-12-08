@@ -18,6 +18,7 @@ export const ENDPOINTS = {
     SEND_MESSAGE: (id: number) => `/api/workflows/${id}/messages`,
     APPROVE: (id: number) => `/api/workflows/${id}/approve`,
     EDIT: (id: number) => `/api/workflows/${id}/edit`,
+    TRACK_RUN: (id: number) => `/api/workflows/${id}/runs`,
   },
   SHARES: {
     CREATE: '/api/shares',

@@ -6,30 +6,46 @@ interface WorkflowCardFooterProps {
 }
 
 const WorkflowCardFooter = ({ metadata }: WorkflowCardFooterProps) => {
-  const formatLastRun = (date: Date | null) => {
-    if (!date) return '';
+  const formatLastRun = (dateString: string | null) => {
+    if (!dateString) return '';
 
-    let lastRun = '';
+    const date = new Date(dateString);
     const now = new Date();
     const diffMs = now.getTime() - date.getTime();
-    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+    const diffSeconds = Math.floor(diffMs / 1000);
+    const diffMinutes = Math.floor(diffSeconds / 60);
+    const diffHours = Math.floor(diffMinutes / 60);
     const diffDays = Math.floor(diffHours / 24);
 
-    if (diffDays === 1) lastRun = 'Yesterday';
-    else if (diffDays > 1) lastRun = `${diffDays} days ago`;
-    else if (diffHours > 0) lastRun = `${diffHours}h ago`;
-    else lastRun = 'Just now';
+    let lastRun = '';
+
+    if (diffSeconds <= 30) {
+      lastRun = 'Just now';
+    } else if (diffMinutes < 60) {
+      lastRun = `${diffMinutes}m ago`;
+    } else if (diffHours < 24) {
+      lastRun = `${diffHours}h ago`;
+    } else if (diffDays === 1) {
+      lastRun = 'Yesterday';
+    } else {
+      lastRun = `${diffDays} days ago`;
+    }
 
     return `Last Run: ${lastRun}`;
   };
+
+  const runsText = metadata.numRuns > 1 ? 'successful runs' : 'run';
+  const numRuns = metadata.numRuns || 0;
 
   return (
     <Card.Section p='xs' bg='dark.5'>
       <Flex justify='space-between' align='center'>
         <Flex gap='2' align='center'>
           <Text size='xs' c='dimmed'>
-            {metadata.numRuns} runs {metadata.numRuns === 0 ? 'for now' : ''}
-            {metadata.numSaved && ` • ${metadata.numSaved}h saved`}
+            {numRuns} {runsText} {numRuns === 0 ? 'for now' : ''}
+            {/* TODO: in the future, get estimate from user for how long it saves. Then show this here */}
+            {/* {metadata.numSaved &&
+              ` • ${Math.round(metadata.numSaved * 10) / 10}h saved`} */}
           </Text>
         </Flex>
         <Flex align='center'>

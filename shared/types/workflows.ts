@@ -26,7 +26,7 @@ export interface WorkflowMetadata {
   category: WorkflowCategory;
   name: string;
   description: string;
-  lastRun: Date | null;
+  lastRun: string | null; // ISO date string from API
   numRuns: number;
   numSaved?: number; // Optional for display like "142 runs (28h saved)"
 }

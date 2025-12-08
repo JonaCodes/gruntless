@@ -42,6 +42,7 @@ const WorkflowNavbar = observer(
 
         <WorkflowForm
           key={workflowId}
+          workflowId={workflowId}
           fields={fields}
           actionButton={actionButton}
           execution={workflow.execution}

@@ -10,6 +10,7 @@ export const fetchWorkflows = async (): Promise<Workflow[]> => {
   if (response.error || !Array.isArray(response.data)) {
     return [];
   }
+
   return response.data;
 };
 
@@ -24,5 +25,21 @@ export const seedWorkflow = async (
 
   if (response.error) {
     throw new Error(response.message || 'Failed to seed workflow');
+  }
+};
+
+export const trackWorkflowRun = async (
+  workflowId: string,
+  success: boolean
+): Promise<void> => {
+  const response = await makeRequest(
+    HTTP_METHODS.POST,
+    ENDPOINTS.WORKFLOWS.TRACK_RUN(parseInt(workflowId)),
+    { success }
+  );
+
+  if (response.error) {
+    console.error('Failed to track workflow run:', response.message);
+    // Don't throw - tracking failure shouldn't block user experience
   }
 };

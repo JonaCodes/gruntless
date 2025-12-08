@@ -88,5 +88,9 @@ export default class Workflow extends Model {
       foreignKey: 'workflow_id',
       as: 'shares',
     });
+    this.hasMany(models.WorkflowRun, {
+      foreignKey: 'workflow_id',
+      as: 'runs',
+    });
   }
 }

@@ -13,14 +13,17 @@ import TextInputField from './TextInputField';
 import WorkflowLogs from './WorkflowLogs';
 import { usePyodideRunner } from '../../../hooks/usePyodideRunner';
 import { EXECUTION_STATUS } from 'public/src/consts/pyodide';
+import { trackWorkflowRun } from '../../../clients/workflows-client';
 
 interface WorkflowFormProps {
+  workflowId: string;
   fields: WorkflowField[];
   actionButton: WorkflowAction;
   execution?: WorkflowExecution;
 }
 
 const WorkflowForm = ({
+  workflowId,
   fields,
   actionButton,
   execution,
@@ -59,8 +62,11 @@ const WorkflowForm = ({
   useEffect(() => {
     if (status === EXECUTION_STATUS.SUCCESS && output) {
       handleDownload();
+      trackWorkflowRun(workflowId, true);
+    } else if (status === EXECUTION_STATUS.ERROR) {
+      trackWorkflowRun(workflowId, false);
     }
-  }, [status, output]);
+  }, [status, output, workflowId]);
 
   const renderField = (field: WorkflowField) => {
     switch (field.type) {

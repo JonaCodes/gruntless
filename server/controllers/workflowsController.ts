@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
-import { getWorkflowsByUser } from '../services/workflows/workflowsService';
+import { getUserWorkflowsWithStats } from '../services/workflows/workflowsService';
 import { seedManualWorkflow } from 'services/workflows/seeder';
+import { recordWorkflowRun as recordRun } from '../services/workflows/workflowRunService';
 
 export const listWorkflows = async (req: Request, res: Response) => {
   try {
@@ -10,8 +11,8 @@ export const listWorkflows = async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'User ID required' });
     }
 
-    const transformedWorkflows = await getWorkflowsByUser(userId);
-    res.json(transformedWorkflows);
+    const workflowsWithStats = await getUserWorkflowsWithStats(userId);
+    res.json(workflowsWithStats);
   } catch (error) {
     console.error('listWorkflows error:', error);
     res.status(500).json({ error: 'Failed to list workflows' });
@@ -83,5 +84,24 @@ export const seedWorkflow = async (req: Request, res: Response) => {
   } catch (error) {
     console.error('seedWorkflow error:', error);
     res.status(500).json({ error: 'Failed to seed workflow' });
+  }
+};
+
+export const recordWorkflowRun = async (req: Request, res: Response) => {
+  try {
+    const workflowId = parseInt(req.params.id);
+    const userId = req.user!.id;
+    const accountId = req.user!.accountId;
+    const { success } = req.body;
+
+    await recordRun(workflowId, userId, accountId, success);
+
+    res.status(201).json({ success: true });
+  } catch (error: any) {
+    console.error('recordWorkflowRun error:', error);
+    const statusCode = error.message.includes('not found') ? 404 : 500;
+    res
+      .status(statusCode)
+      .json({ error: error.message || 'Failed to record workflow run' });
   }
 };

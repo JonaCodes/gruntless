@@ -24,6 +24,4 @@ const sequelize = new Sequelize(
   }
 );
 
-console.log('[DB_CONFIG] Pool settings:', sequelize.config.pool);
-
 export default sequelize;
