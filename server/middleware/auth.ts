@@ -25,7 +25,19 @@ export const requireAuth = async (
     req.user = user;
     next();
   } catch (error: any) {
-    console.error('Auth middleware error:', error.message, error);
+    const isExpectedAuthFailure =
+      error.__isAuthError &&
+      (error.code === 'user_not_found' ||
+        error.code === 'invalid_jwt' ||
+        error.code === 'session_not_found' ||
+        error.status === 403 ||
+        error.status === 401);
+
+    if (isExpectedAuthFailure) {
+      return res.status(401).json({ error: 'Authentication failed' });
+    }
+
+    console.error('Auth middleware error (unexpected):', error.message, error);
     res.status(401).json({ error: error.message });
   }
 };

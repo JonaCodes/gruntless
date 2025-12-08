@@ -114,8 +114,8 @@ const App = observer(() => {
       })}
     >
       {isSmall && !isLandingPage && (
-        <AppShell.Header>
-          <Group h='100%' px='md' gap={'xl'}>
+        <AppShell.Header zIndex={1000}>
+          <Group h='100%' px='md' gap={'xs'}>
             <Burger opened={opened} onClick={toggleNavbar} size='sm' />
             {!opened && <Logo setNavbarOpened={setNavbarOpened} />}
           </Group>
