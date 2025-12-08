@@ -1,174 +1,152 @@
-import {
-  Flex,
-  Button,
-  // TextInput,
-  Stack,
-  Text,
-  // Divider,
-  Paper,
-  Image,
-  Tooltip,
-} from '@mantine/core';
+import { Flex, Paper, Stack, ActionIcon } from '@mantine/core';
+import { IconArrowLeft } from '@tabler/icons-react';
 import { observer } from 'mobx-react-lite';
-import { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
-import appStore from 'public/src/stores/appStore';
-import { supabase } from 'public/src/lib/supabase';
+import { useState, useEffect } from 'react';
+import { ProviderSelection } from './ProviderSelection';
+import { EmailForm } from './EmailForm';
+import { OtpVerification } from './OtpVerification';
+import { signInWithOAuth, requestOtp, verifyOtp } from './authHelpers';
+import { STYLES } from 'public/src/consts/styling';
+import './auth.module.css';
+
+enum AuthStep {
+  PROVIDER_SELECTION = 'provider_selection',
+  EMAIL_INPUT = 'email_input',
+  OTP_VERIFICATION = 'otp_verification',
+}
 
 const SignUpOrLogin = observer(() => {
-  // const [isSignUp, setIsSignUp] = useState(false);
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-  // const [error, setError] = useState('');
-  // const navigate = useNavigate();
-
-  // const handleEmailAuth = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   setError('');
-
-  //   try {
-  //     if (isSignUp) {
-  //       const { error } = await supabase.auth.signUp({
-  //         email,
-  //         password,
-  //         options: {
-  //           emailRedirectTo: `${window.location.origin}/auth/callback`,
-  //         },
-  //       });
-  //       if (error) throw error;
-  //     } else {
-  //       const { error } = await supabase.auth.signInWithPassword({
-  //         email,
-  //         password,
-  //       });
-  //       if (error) throw error;
-  //     }
-  //     navigate('/dashboard/123');
-  //   } catch (err: any) {
-  //     setError(err.message);
-  //   }
-  // };
-
+  const [authStep, setAuthStep] = useState<AuthStep>(
+    AuthStep.PROVIDER_SELECTION
+  );
   const [selectedProvider, setSelectedProvider] = useState<string | null>(null);
+  const [email, setEmail] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [otpCode, setOtpCode] = useState('');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isResending, setIsResending] = useState(false);
 
-  const handleGoogleSignIn = async () => {
-    try {
-      appStore.setIsLoadingSignIn(true);
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
-        },
-      });
-
-      // appStore.setIsLoadingSignIn(false);
-      if (error) throw error;
-    } catch (err: any) {
-      // TODO: alert & log error
-      // setError(err.message);
-      console.error(err);
+  const handleOAuthSignIn = async (provider: 'google' | 'apple') => {
+    setSelectedProvider(provider === 'google' ? 'Google' : 'Apple');
+    const { error } = await signInWithOAuth(provider);
+    if (error) {
+      setError(error.message || 'Failed to sign in');
     }
   };
 
-  const handleAppleSignIn = async () => {
-    try {
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: 'apple',
-        options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
-        },
-      });
-      if (error) throw error;
-    } catch (err: any) {
-      // TODO: alert & log error
-      // setError(err.message);
-      console.error(err);
+  const handleEmailSubmit = async () => {
+    setError('');
+    setIsLoading(true);
+
+    const { error: otpError } = await requestOtp(email);
+
+    if (otpError) {
+      setError(otpError.message || 'Failed to send code');
+    } else {
+      setAuthStep(AuthStep.OTP_VERIFICATION);
+    }
+
+    setIsLoading(false);
+  };
+
+  const handleOtpVerify = async () => {
+    setError('');
+    setIsLoading(true);
+
+    const { error: verifyError } = await verifyOtp(email, otpCode, fullName);
+
+    if (verifyError) {
+      setError(verifyError.message || 'Invalid code');
+      setOtpCode('');
+    } else {
+      // Session is now established! Redirect to callback handler
+      window.location.href = '/auth/callback';
+    }
+
+    setIsLoading(false);
+  };
+
+  const handleResendCode = async () => {
+    setError('');
+    setIsResending(true);
+
+    const { error: otpError } = await requestOtp(email);
+
+    if (otpError) {
+      setError(otpError.message || 'Failed to resend code');
+    }
+
+    setIsResending(false);
+  };
+
+  const handleBack = () => {
+    setError('');
+    if (authStep === AuthStep.OTP_VERIFICATION) {
+      setAuthStep(AuthStep.EMAIL_INPUT);
+      setOtpCode('');
+    } else if (authStep === AuthStep.EMAIL_INPUT) {
+      setAuthStep(AuthStep.PROVIDER_SELECTION);
+      setEmail('');
+      setFullName('');
     }
   };
 
-  const renderLoginButton = (
-    provider: string,
-    imgSrc: string,
-    handler: () => void
-  ) => {
-    return (
-      <Button
-        variant='default'
-        leftSection={<Image src={imgSrc} w={20} h={20} />}
-        onClick={() => {
-          setSelectedProvider(provider);
-          handler();
-        }}
-        loading={appStore.isLoadingSignIn && selectedProvider === provider}
-        disabled={provider === 'Apple'}
-        fullWidth
-      >
-        Continue with {provider}
-      </Button>
-    );
-  };
+  // Auto-submit when 6 digits are entered
+  useEffect(() => {
+    if (otpCode.length === 6 && !isLoading) {
+      handleOtpVerify();
+    }
+  }, [otpCode]);
 
   return (
-    <Flex justify='center' align='center' h='100vh'>
-      <Paper shadow='md' p='xl' radius='md' w='100%' maw={400}>
+    <Flex justify='center' align='center' h='100%' w='100%'>
+      <Paper shadow='xs' p='xl' radius='md' w='100%' maw={400}>
         <Stack>
-          <Text size='md' ta='center'>
-            Time to put an end to gruntwork
-            {/* {isSignUp ? 'Create an account' : 'Welcome back'} */}
-          </Text>
-
-          {renderLoginButton(
-            'Google',
-            'https://www.gstatic.com/marketing-cms/assets/images/d5/dc/cfe9ce8b4425b410b49b7f2dd3f3/g.webp=s48-fcrop64=1,00000000ffffffff-rw',
-            handleGoogleSignIn
+          {authStep !== AuthStep.PROVIDER_SELECTION && (
+            <ActionIcon
+              variant='subtle'
+              onClick={handleBack}
+              style={{ alignSelf: 'flex-start' }}
+              color={STYLES.COLORS.APP_THEME.SHADE_1}
+            >
+              <IconArrowLeft size={18} />
+            </ActionIcon>
           )}
 
-          <Tooltip label='Coming soon'>
-            {renderLoginButton(
-              'Apple',
-              'https://cdn.freebiesupply.com/images/large/2x/apple-logo-transparent.png',
-              handleAppleSignIn
-            )}
-          </Tooltip>
+          {authStep === AuthStep.PROVIDER_SELECTION && (
+            <ProviderSelection
+              onSelectOAuth={handleOAuthSignIn}
+              onSelectEmail={() => setAuthStep(AuthStep.EMAIL_INPUT)}
+              isLoading={isLoading}
+              selectedProvider={selectedProvider}
+            />
+          )}
 
-          {/*<Divider label='Or sign in with your email' labelPosition='center' />
+          {authStep === AuthStep.EMAIL_INPUT && (
+            <EmailForm
+              email={email}
+              fullName={fullName}
+              error={error}
+              isLoading={isLoading}
+              onEmailChange={setEmail}
+              onNameChange={setFullName}
+              onSubmit={handleEmailSubmit}
+            />
+          )}
 
-          <form onSubmit={handleEmailAuth}>
-            <Stack>
-              <TextInput
-                required
-                placeholder='thebestauthor@email.com'
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <TextInput
-                required
-                type='password'
-                placeholder='password'
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              {error && (
-                <Text c='red' size='sm'>
-                  {error}
-                </Text>
-              )}
-              <Button type='submit' fullWidth>
-                {isSignUp ? 'Sign up' : 'Sign in'}
-              </Button>
-            </Stack>
-          </form> */}
-
-          {/* <Text ta='center' size='sm'>
-            {isSignUp ? 'Already have an account?' : "Don't have an account?"}{' '}
-            <Text
-              component='button'
-              variant='link'
-              onClick={() => setIsSignUp(!isSignUp)}
-            >
-              {isSignUp ? 'Sign in' : 'Sign up'}
-            </Text>
-          </Text> */}
+          {authStep === AuthStep.OTP_VERIFICATION && (
+            <OtpVerification
+              email={email}
+              otpCode={otpCode}
+              error={error}
+              isLoading={isLoading}
+              isResending={isResending}
+              onOtpChange={setOtpCode}
+              onVerify={handleOtpVerify}
+              onResend={handleResendCode}
+            />
+          )}
         </Stack>
       </Paper>
     </Flex>
