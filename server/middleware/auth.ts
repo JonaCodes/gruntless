@@ -16,7 +16,7 @@ export const requireAuth = async (
         .json({ error: 'No token provided - middleware rejection' });
     }
 
-    const user = await AuthService.getCurrentUser(token);
+    const user = await AuthService.validateUser(token);
     if (!user) {
       return res.status(401).json({ error: 'Invalid token' });
     }
