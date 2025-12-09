@@ -7,7 +7,7 @@ import { Transaction } from 'sequelize';
 const updateUserInfo = async (user: User, userInfo: any, t?: Transaction) => {
   const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000);
 
-  if (user.lastLogin.getTime() < tenMinutesAgo.getTime()) {
+  if (!user.lastLogin || user.lastLogin.getTime() < tenMinutesAgo.getTime()) {
     await user.update(
       {
         email: userInfo.email,
@@ -21,7 +21,7 @@ const updateUserInfo = async (user: User, userInfo: any, t?: Transaction) => {
   }
 };
 
-export async function ensureUserExists(
+export async function syncUserFromSupabase(
   supabaseUser: SupabaseUser,
   provider?: string
 ): Promise<User> {
@@ -32,9 +32,21 @@ export async function ensureUserExists(
     provider: provider || supabaseUser.app_metadata.provider || 'email',
   };
 
+  // Step 1: Optimistic Read (No Lock)
+  const existingUser = await User.findOne({
+    where: { supabaseId: supabaseUser.id },
+  });
+
+  const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000);
+
+  if (existingUser && existingUser.lastLogin > tenMinutesAgo) {
+    return existingUser;
+  }
+
+  // Step 2: The Lock
   // Use a transaction to ensure atomicity and prevent race conditions
   const result = await sequelize.transaction(async (t) => {
-    // Try to find existing user first (with lock to prevent race conditions)
+    // Step 3: Re-check inside the lock
     let user = await User.findOne({
       where: { supabaseId: supabaseUser.id },
       transaction: t,
@@ -46,7 +58,6 @@ export async function ensureUserExists(
       return user;
     }
 
-    // User doesn't exist - create account and user atomically
     try {
       // Always create a new account for a new user for now, until we have actual accounts
       const newAccount = await Account.create(
