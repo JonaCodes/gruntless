@@ -9,7 +9,8 @@ export type WorkflowCategory =
 export type WorkflowFieldType =
   | 'multi_file_upload'
   | 'file_upload'
-  | 'text_input';
+  | 'text_input'
+  | 'text_area';
 
 export interface WorkflowField {
   id: string;

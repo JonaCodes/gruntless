@@ -10,6 +10,7 @@ import {
 import { STYLES } from 'public/src/consts/styling';
 import FileUploadField from './FileUploadField';
 import TextInputField from './TextInputField';
+import TextAreaField from './TextAreaField';
 import WorkflowLogs from './WorkflowLogs';
 import { usePyodideRunner } from '../../../hooks/usePyodideRunner';
 import { EXECUTION_STATUS } from 'public/src/consts/pyodide';
@@ -86,6 +87,18 @@ const WorkflowForm = ({
       case 'text_input':
         return (
           <TextInputField
+            key={field.id}
+            field={field}
+            value={textInputs[field.id] || ''}
+            onChange={(value) =>
+              setTextInputs({ ...textInputs, [field.id]: value })
+            }
+          />
+        );
+
+      case 'text_area':
+        return (
+          <TextAreaField
             key={field.id}
             field={field}
             value={textInputs[field.id] || ''}
