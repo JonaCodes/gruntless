@@ -18,7 +18,7 @@ app.get('/auth/callback', (_, res) => {
   res.sendFile(filePath);
 });
 
-app.use('/auth', requireAuth, authRoutes);
+app.use('/auth', authRoutes);
 app.use('/api/workflows', requireAuth, workflowRoutes);
 app.use('/api/shares', requireAuth, shareRoutes);
 
