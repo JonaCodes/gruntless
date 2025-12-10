@@ -1,4 +1,3 @@
-import { literal } from 'sequelize';
 import Workflow from '../../models/workflow';
 import { WORKFLOW_VERSION_STATUS } from '@shared/consts/workflows';
 import { transformToFrontendFormat } from '../../utils/workflowTransformer';
@@ -14,22 +13,8 @@ export const getUserWorkflows = async (
 ): Promise<Workflow[] | number[]> => {
   const { idsOnly = false } = options;
 
-  const baseQuery = {
-    where: literal(`
-      "Workflow"."user_id" = ${userId}
-      OR EXISTS (
-        SELECT 1
-        FROM workflow_shares ws
-        WHERE ws.workflow_id = "Workflow"."id"
-          AND ws.shared_with = ${userId}
-          AND ws.accepted_at IS NOT NULL
-      )
-    `),
-  };
-
   if (idsOnly) {
     const workflows = await Workflow.findAll({
-      ...baseQuery,
       attributes: ['id'],
       raw: true,
     });
@@ -37,12 +22,7 @@ export const getUserWorkflows = async (
     return workflows.map((w: any) => w.id);
   }
 
-  const query: any = {
-    ...baseQuery,
-    order: [['updatedAt', 'DESC']],
-  };
-
-  return await Workflow.findAll(query);
+  return await Workflow.findAll({ where: { userId } });
 };
 
 export const hasWorkflowAccess = async (

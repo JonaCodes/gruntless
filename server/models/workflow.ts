@@ -12,17 +12,17 @@ export default class Workflow extends Model {
   public id!: number;
   public accountId!: number;
   public userId!: number;
-  public name!: string | null;
+  public name!: string;
   public description!: string | null;
+  // TODO: label will be FK to workflow_labels table
   public label!: string | null;
-  // TODO: category will be FK to workflow_categories table
   public actionButtonLabel!: string | null;
   public estSavedMinutes!: number | null;
   public parentWorkflowId!: number | null;
   public rootWorkflowId!: number | null;
   public version!: number;
   public status!: keyof typeof WORKFLOW_VERSION_STATUS;
-  public fileExtracts!: FileExtract[];
+  public fileExtracts!: FileExtract[] | null;
   public fields!: WorkflowField[] | null;
   public execution!: WorkflowExecution | null;
   public rejectionReason!: string | null;
