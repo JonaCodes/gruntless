@@ -1,20 +1,18 @@
 import { literal } from 'sequelize';
 import Workflow from '../../models/workflow';
-import WorkflowVersion from '../../models/workflow_version';
 import { WORKFLOW_VERSION_STATUS } from '@shared/consts/workflows';
 import { transformToFrontendFormat } from '../../utils/workflowTransformer';
-import { getUserWorkflowRunStats } from './workflowRunService';
+import { getWorkflowStats } from './workflowRunService';
 
 interface GetUserWorkflowsOptions {
   idsOnly?: boolean;
-  includeVersions?: boolean;
 }
 
 export const getUserWorkflows = async (
   userId: number,
   options: GetUserWorkflowsOptions = {}
 ): Promise<Workflow[] | number[]> => {
-  const { idsOnly = false, includeVersions = false } = options;
+  const { idsOnly = false } = options;
 
   const baseQuery = {
     where: literal(`
@@ -39,22 +37,10 @@ export const getUserWorkflows = async (
     return workflows.map((w: any) => w.id);
   }
 
-  const query: any = { ...baseQuery };
-
-  if (includeVersions) {
-    query.include = [
-      {
-        model: WorkflowVersion,
-        as: 'versions',
-        where: {
-          isActive: true,
-          status: WORKFLOW_VERSION_STATUS.APPROVED,
-        },
-        required: false,
-      },
-    ];
-    query.order = [['updatedAt', 'DESC']];
-  }
+  const query: any = {
+    ...baseQuery,
+    order: [['updatedAt', 'DESC']],
+  };
 
   return await Workflow.findAll(query);
 };
@@ -71,18 +57,19 @@ export const hasWorkflowAccess = async (
 };
 
 export const getUserWorkflowsWithStats = async (userId: number) => {
-  const [workflows, runStatsMap] = await Promise.all([
-    getUserWorkflows(userId, { includeVersions: true }),
-    getUserWorkflowRunStats(userId),
-  ]);
+  const workflows = (await getUserWorkflows(userId)) as Workflow[];
 
-  return (workflows as Workflow[])
-    .filter((w: any) => w.versions && w.versions.length > 0)
-    .map((workflow: any) => {
-      const stats = runStatsMap.get(workflow.id) || {
-        numRuns: 0,
-        lastRun: null,
-      };
+  const approvedWorkflows = workflows.filter(
+    (w: any) => w.status === WORKFLOW_VERSION_STATUS.APPROVED
+  );
+
+  // Get stats for each workflow
+  const workflowsWithStats = await Promise.all(
+    approvedWorkflows.map(async (workflow: any) => {
+      const stats = await getWorkflowStats(userId, workflow.id);
       return transformToFrontendFormat(workflow, stats.numRuns, stats.lastRun);
-    });
+    })
+  );
+
+  return workflowsWithStats;
 };

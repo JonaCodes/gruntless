@@ -12,11 +12,10 @@ leaves the user's machine.
 
 1. User uploads file(s)
 2. FileUploadSection triggers extraction for each file
-3. CSVHandler generates unique requestId (prevents race conditions)
-   - Future: PDFHandler, ExcelHandler, etc.
+3. Handler (CSV or PDF) generates unique requestId (prevents race conditions)
 4. Pyodide worker runs Python script:
    - Extracts file structure (e.g., CSV columns + 3 sample rows)
-   - Masks data (A/a/# character replacement)
+   - Masks data (file-type specific character replacement)
    - Returns masked preview
 5. Masked data stored in workflowFilesStore (MobX)
 6. FilePreviewSection displays carousel of masked previews
@@ -36,10 +35,12 @@ leaves the user's machine.
 - `pyodide.worker.ts` - Routes messages to extractors
 - `PyodideWorkerManager.ts` - Singleton worker (shared across all extractions)
 - `csvExtractor.ts` - Python script for CSV extraction + masking
+- `pdfExtractor.ts` - Python script for PDF extraction + masking
 
 **Handlers**
 
 - `csv.ts` - CSVHandler generates requestId, correlates responses
+- `pdf.ts` - PDFHandler generates requestId, correlates responses
 
 ## Technical Details
 
@@ -51,9 +52,20 @@ leaves the user's machine.
 
 ### Masking Strategy
 
-- **CSV**: Simple character replacement (uppercase→A, lowercase→a, digit→#)
-- **Future (PDF)**: Keyword preservation ("Invoice:", "Date:" stay unmasked)
-- Masking happens **in Python** during extraction (file-type specific)
+Masking happens **in Python** during extraction (file-type specific):
+
+**CSV:**
+- Uppercase → `A`
+- Lowercase → `a`
+- Digit → `#`
+- Punctuation preserved
+
+**PDF:**
+- Uppercase → `A`
+- Lowercase → `a`
+- Digit → `n`
+- Safe keywords preserved unmasked ("Invoice", "Date", "Total", "Bill", etc.)
+- Text without keywords → `**REDACTED**`
 
 ### State Management
 
@@ -61,6 +73,7 @@ leaves the user's machine.
 uploadedFiles: FileWithPath[]                // Original files
 extractedFiles: Record<fileName, extract>    // Masked previews
 extractionStatus: Record<fileName, status>   // 'extracting' | 'success' | 'error'
+extractionErrors: Record<fileName, error>    // Error messages if extraction fails
 approvedFiles: Set<fileName>                 // Which files user approved
 ```
 

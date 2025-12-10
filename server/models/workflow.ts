@@ -1,4 +1,12 @@
 import { Model, DataTypes, Sequelize } from 'sequelize';
+import { WORKFLOW_VERSION_STATUS } from '@shared/consts/workflows';
+import type {
+  FileExtract,
+  WorkflowField,
+  WorkflowExecution,
+} from '@shared/types/workflows';
+
+const STATUS_VALUES = Object.values(WORKFLOW_VERSION_STATUS);
 
 export default class Workflow extends Model {
   public id!: number;
@@ -8,15 +16,18 @@ export default class Workflow extends Model {
   public description!: string | null;
   public label!: string | null;
   // TODO: category will be FK to workflow_categories table
-  public lastRun!: Date | null;
-  public numRuns!: number;
   public actionButtonLabel!: string | null;
   public estSavedMinutes!: number | null;
+  public parentWorkflowId!: number | null;
+  public rootWorkflowId!: number | null;
+  public version!: number;
+  public status!: keyof typeof WORKFLOW_VERSION_STATUS;
+  public fileExtracts!: FileExtract[];
+  public fields!: WorkflowField[] | null;
+  public execution!: WorkflowExecution | null;
+  public rejectionReason!: string | null;
   public createdAt!: Date;
   public updatedAt!: Date;
-
-  // Association types
-  public versions?: any[];
 
   static initialize(sequelize: Sequelize) {
     super.init(
@@ -46,21 +57,47 @@ export default class Workflow extends Model {
           type: DataTypes.STRING,
           allowNull: true,
         },
-        lastRun: {
-          type: DataTypes.DATE,
-          allowNull: true,
-        },
-        numRuns: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-          defaultValue: 0,
-        },
         actionButtonLabel: {
           type: DataTypes.STRING,
           allowNull: true,
         },
         estSavedMinutes: {
           type: DataTypes.INTEGER,
+          allowNull: true,
+        },
+        parentWorkflowId: {
+          type: DataTypes.INTEGER,
+          allowNull: true,
+        },
+        rootWorkflowId: {
+          type: DataTypes.INTEGER,
+          allowNull: true,
+        },
+        version: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          defaultValue: 1,
+        },
+        status: {
+          type: DataTypes.ENUM(...STATUS_VALUES),
+          allowNull: false,
+          defaultValue: WORKFLOW_VERSION_STATUS.APPROVED,
+        },
+        fileExtracts: {
+          type: DataTypes.JSONB,
+          allowNull: false,
+          defaultValue: [],
+        },
+        fields: {
+          type: DataTypes.JSONB,
+          allowNull: true,
+        },
+        execution: {
+          type: DataTypes.JSONB,
+          allowNull: true,
+        },
+        rejectionReason: {
+          type: DataTypes.TEXT,
           allowNull: true,
         },
       },
@@ -76,10 +113,6 @@ export default class Workflow extends Model {
   static associate(models: any) {
     this.belongsTo(models.Account, { foreignKey: 'account_id' });
     this.belongsTo(models.User, { foreignKey: 'user_id' });
-    this.hasMany(models.WorkflowVersion, {
-      foreignKey: 'workflow_id',
-      as: 'versions',
-    });
     this.hasMany(models.WorkflowMessage, {
       foreignKey: 'workflow_id',
       as: 'messages',

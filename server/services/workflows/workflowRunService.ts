@@ -1,6 +1,12 @@
-import { fn, col, literal } from 'sequelize';
+import { fn, col, Op } from 'sequelize';
 import WorkflowRun from '../../models/workflow_run';
+import Workflow from '../../models/workflow';
 import { hasWorkflowAccess } from './workflowsService';
+
+interface WorkflowStatsQueryResult {
+  numRuns: string; // Sequelize returns COUNT as string
+  lastRun: string | null;
+}
 
 export const recordWorkflowRun = async (
   workflowId: number,
@@ -19,23 +25,37 @@ export const recordWorkflowRun = async (
   });
 };
 
-export const getUserWorkflowRunStats = async (userId: number) => {
-  const runStats = await WorkflowRun.findAll({
-    where: { userId },
-    attributes: [
-      'workflowId',
-      [fn('COUNT', literal('CASE WHEN success = true THEN 1 END')), 'numRuns'],
-      [fn('MAX', col('created_at')), 'lastRun'],
-    ],
-    group: ['workflowId'],
+export const getWorkflowStats = async (userId: number, workflowId: number) => {
+  const workflow = await Workflow.findByPk(workflowId);
+  if (!workflow) return { numRuns: 0, lastRun: null };
+
+  const rootId = workflow.rootWorkflowId || workflow.id;
+
+  const workflows = await Workflow.findAll({
+    where: {
+      [Op.or]: [{ id: rootId }, { rootWorkflowId: rootId }],
+    },
+    attributes: ['id'],
     raw: true,
   });
 
-  // Create a map of workflow_id -> stats
-  return new Map(
-    runStats.map((stat: any) => [
-      stat.workflowId,
-      { numRuns: parseInt(stat.numRuns) || 0, lastRun: stat.lastRun },
-    ])
-  );
+  const workflowIds = workflows.map((w: any) => w.id);
+
+  const stats = (await WorkflowRun.findAll({
+    where: {
+      userId,
+      workflowId: { [Op.in]: workflowIds },
+      success: true,
+    },
+    attributes: [
+      [fn('COUNT', col('id')), 'numRuns'],
+      [fn('MAX', col('created_at')), 'lastRun'],
+    ],
+    raw: true,
+  })) as unknown as WorkflowStatsQueryResult[];
+
+  return {
+    numRuns: parseInt(stats[0]?.numRuns || '0'),
+    lastRun: stats[0]?.lastRun || null,
+  };
 };

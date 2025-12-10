@@ -27,8 +27,8 @@ User uploads files and clicks the action button. The form:
 
 - Collects uploaded files with their field IDs (e.g.,
   `{fieldId: 'source_files', file: ...}`)
-- Retrieves the Python script from the workflow definition (currently hardcoded
-  in `workflowsData.ts`, will be fetched from DB in future)
+- Retrieves the Python script and dependencies from the workflow definition
+  (`execution?.dependencies`)
 - Calls `run(script, filesWithFieldIds, outputFilename)` from the
   `usePyodideRunner` hook
 
@@ -85,7 +85,16 @@ df.to_csv('/output/result.csv', index=False)
 - Output must be written to `/output/`
 - `print()` statements appear in the UI logs
 
-### 6. Result Handling (`WorkflowForm.tsx`)
+### 6. Dependency Management
+
+Python dependencies are specified per workflow in the `execution.dependencies` array:
+
+- Frontend passes dependencies to the `usePyodideRunner` hook
+- Worker installs packages on first run via micropip
+- Packages persist in worker memory across executions
+- Example: `["pandas", "numpy", "openpyxl"]`
+
+### 7. Result Handling (`WorkflowForm.tsx`)
 
 When the worker sends back a `SUCCESS` message:
 
@@ -93,20 +102,22 @@ When the worker sends back a `SUCCESS` message:
 - A `useEffect` triggers auto-download via a temporary `<a>` element
 - Success alert shows with a fallback download link
 
-## File System Mapping
+## Technical Reference
+
+### File System Mapping
 
 | Location                  | Purpose                                        |
 | ------------------------- | ---------------------------------------------- |
 | `/input_files/{fieldId}/` | User-uploaded files organized by form field ID |
 | `/output/`                | Script output files (read by controller)       |
 
-## Error Handling
+### Error Handling
 
 - **Timeout**: Scripts have 30 seconds to complete
 - **Python errors**: Captured from `stderr` and displayed in the UI
 - **Missing output**: If no file is found in `/output/`, an error is shown
 
-## Performance Notes
+### Performance Notes
 
 - **First run**: ~2-3 seconds (loads Pyodide + dependencies)
 - **Subsequent runs**: Near-instant (worker stays alive via singleton pattern)

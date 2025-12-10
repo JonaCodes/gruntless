@@ -4,28 +4,22 @@ import {
   WorkflowField,
 } from '@shared/types/workflows';
 
-interface WorkflowWithVersions {
+interface WorkflowData {
   id: number;
   name: string | null;
   description: string | null;
-  lastRun: Date | null;
-  numRuns: number;
   actionButtonLabel: string | null;
   estSavedMinutes: number | null;
-  versions?: Array<{
-    fields: WorkflowField[] | null;
-    execution: WorkflowExecution | null;
-  }>;
+  fields: WorkflowField[] | null;
+  execution: WorkflowExecution | null;
 }
 
-// Transforms a database Workflow model (with versions) into the frontend format
+// Transforms a database Workflow model into the frontend format
 export function transformToFrontendFormat(
-  workflow: WorkflowWithVersions,
+  workflow: WorkflowData,
   numRuns: number,
   lastRun: string | null
 ): Workflow {
-  const activeVersion = workflow.versions?.[0];
-
   // Calculate numSaved: numRuns * estSavedMinutes / 60 (convert to hours)
   const numSaved = workflow.estSavedMinutes
     ? (numRuns * workflow.estSavedMinutes) / 60
@@ -41,16 +35,16 @@ export function transformToFrontendFormat(
       numRuns,
       numSaved,
     },
-    fields: activeVersion?.fields || [],
+    fields: workflow.fields || [],
     actionButton: {
       label: workflow.actionButtonLabel || 'Run Workflow',
       onClick: () => {}, // Placeholder - frontend will handle this
     },
-    execution: activeVersion?.execution
+    execution: workflow.execution
       ? {
-          dependencies: activeVersion.execution.dependencies || [],
-          outputFilename: activeVersion.execution.outputFilename,
-          script: activeVersion.execution.script,
+          dependencies: workflow.execution.dependencies || [],
+          outputFilename: workflow.execution.outputFilename,
+          script: workflow.execution.script,
         }
       : undefined,
   };
