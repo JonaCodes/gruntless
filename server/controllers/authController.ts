@@ -1,11 +1,14 @@
 import { Request, Response } from 'express';
 import { AuthService } from '../services/authService';
+import logger from 'logger';
 
 export const getCurrentUser = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
+    logger.info({ startTime: new Date() }, 'Starting getCurrentUser');
+
     if (req.user) {
       res.json(req.user);
       return;
@@ -25,6 +28,7 @@ export const getCurrentUser = async (
 
     res.json(user);
   } catch (error: any) {
+    logger.error({ error: JSON.stringify(error) }, 'Error in getCurrentUser');
     res.status(400).json({ error: error.message });
   }
 };

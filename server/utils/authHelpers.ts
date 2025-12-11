@@ -3,6 +3,7 @@ import Account from '../models/account';
 import { User as SupabaseUser } from '@supabase/supabase-js';
 import sequelize from '../config/database';
 import { Transaction } from 'sequelize';
+import logger from 'logger';
 
 const updateUserInfo = async (user: User, userInfo: any, t?: Transaction) => {
   const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000);
@@ -33,9 +34,14 @@ export async function syncUserFromSupabase(
   };
 
   // Step 1: Optimistic Read (No Lock)
+  const findUserFromDBStartTime = Date.now();
   const existingUser = await User.findOne({
     where: { supabaseId: supabaseUser.id },
   });
+  logger.info(
+    { duration: Date.now() - findUserFromDBStartTime },
+    'Find user from DB in syncUserFromSupabase'
+  );
 
   const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000);
 
@@ -45,6 +51,8 @@ export async function syncUserFromSupabase(
 
   // Step 2: The Lock
   // Use a transaction to ensure atomicity and prevent race conditions
+  const syncTransactionStartTime = Date.now();
+  logger.info({ startTime: syncTransactionStartTime }, 'Starting lock flow');
   const result = await sequelize.transaction(async (t) => {
     // Step 3: Re-check inside the lock
     let user = await User.findOne({
@@ -55,6 +63,10 @@ export async function syncUserFromSupabase(
 
     if (user) {
       await updateUserInfo(user, userInfo, t);
+      logger.info(
+        { duration: Date.now() - syncTransactionStartTime },
+        'updateUserInfo in syncUserFromSupabase'
+      );
       return user;
     }
 
@@ -82,6 +94,10 @@ export async function syncUserFromSupabase(
         { transaction: t }
       );
 
+      logger.info(
+        { duration: Date.now() - syncTransactionStartTime },
+        'Create account and user in syncUserFromSupabase'
+      );
       return user;
     } catch (error: any) {
       // Handle race condition: another request created the user first
@@ -93,6 +109,10 @@ export async function syncUserFromSupabase(
         });
 
         if (existingUser) {
+          logger.info(
+            { duration: Date.now() - syncTransactionStartTime },
+            'Return existing user in syncUserFromSupabase'
+          );
           return existingUser;
         }
       }
@@ -101,5 +121,9 @@ export async function syncUserFromSupabase(
     }
   });
 
+  logger.info(
+    { duration: Date.now() - syncTransactionStartTime },
+    'Return result in syncUserFromSupabase'
+  );
   return result;
 }

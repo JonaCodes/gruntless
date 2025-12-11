@@ -23,9 +23,9 @@ const sequelize = new Sequelize(
         }
       : {},
     pool: {
-      max: 20,
-      min: 5,
-      acquire: 60_000,
+      max: 5,
+      min: 1,
+      acquire: 30_000,
       idle: 30_000, // Max idle time before releasing (10s → 30s)
       evict: 10_000, // Check for idle connections every 10s
     },

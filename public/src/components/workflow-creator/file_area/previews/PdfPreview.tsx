@@ -11,7 +11,6 @@ interface PdfPreviewProps {
 }
 
 const PdfPreview = ({ extract }: PdfPreviewProps) => {
-  console.log(JSON.stringify(extract));
   if (!extract.markdown_content) {
     return (
       <Text fz='sm'>
