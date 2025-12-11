@@ -50,11 +50,10 @@ export default function HeroSection() {
           risking privacy.
         </Text>
 
-        <Box className={classes.heroImage} w={'min-content'} mb={'lg'}>
+        <Box mb={'lg'}>
           <EfficientImage
-            name={'v1765460170/gruntless/gruntless-hero-img.png'}
-            mah={{ base: 150, xl: 350 }}
-            w={'min-content'}
+            name={'v1765476825/gruntless/gruntless-hero-img-v3.png'}
+            mah={{ base: 150, xl: 250 }}
             lazy={false}
           />
         </Box>
