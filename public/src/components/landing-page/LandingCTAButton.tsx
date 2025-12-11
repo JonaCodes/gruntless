@@ -5,7 +5,6 @@ import { sendEvent } from 'public/src/clients/app-client';
 import { useEffect } from 'react';
 import classes from './landing.module.css';
 import { STYLES } from 'public/src/consts/styling';
-import appStore from 'public/src/stores/appStore';
 
 interface ButtonProps {
   message?: string;
@@ -31,7 +30,7 @@ export default function LandingCTAButton({
     <Button
       className={classes.ctaButton}
       rightSection={<IconArrowRight size={20} />}
-      size={appStore.isSmall ? 'lg' : 'xl'}
+      size={'lg'}
       radius='xl'
       variant='gradient'
       gradient={{

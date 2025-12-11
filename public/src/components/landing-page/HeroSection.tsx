@@ -3,11 +3,12 @@ import { IconShieldCheck } from '@tabler/icons-react';
 import LandingCTAButton from './LandingCTAButton';
 import { STYLES } from 'public/src/consts/styling';
 import classes from './landing.module.css';
+import EfficientImage from '../shared/EfficientImage';
 
 export default function HeroSection() {
   return (
     <Flex direction='column' py={50}>
-      <Box ta='center'>
+      <Box ta='center' style={{ justifyItems: 'center' }}>
         <Flex
           justify='center'
           gap='xs'
@@ -48,6 +49,15 @@ export default function HeroSection() {
           </Text>{' '}
           risking privacy.
         </Text>
+
+        <Box className={classes.heroImage} w={'min-content'} mb={'lg'}>
+          <EfficientImage
+            name={'v1765460170/gruntless/gruntless-hero-img.png'}
+            mah={{ base: 150, xl: 350 }}
+            w={'min-content'}
+            lazy={false}
+          />
+        </Box>
 
         <Text size='lg' c='dimmed' mb='xl' maw={700} mx='auto'>
           Gruntless is your personal developer for file busywork. Describe any
