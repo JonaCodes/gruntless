@@ -24,7 +24,7 @@ const Workflows = observer(() => {
   }, []);
 
   const handleCreateWorkflow = () => {
-    navigate('/workflows/new');
+    navigate('/grunts/new');
   };
 
   if (appStore.isLoadingWorkflows) {
@@ -40,10 +40,10 @@ const Workflows = observer(() => {
   }
 
   return (
-    <Flex pt={'xl'} direction='column'>
+    <Flex pt={{ base: 'xl', sm: 0 }} direction='column'>
       <WorkflowsNotification />
       <Title order={1} mb='xl' fw={400}>
-        Grunt Workflows
+        Grunts
       </Title>
 
       <div

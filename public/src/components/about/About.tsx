@@ -16,9 +16,9 @@ import { ReachOut } from '../shared/ReachOut';
 
 const faq = [
   {
-    question: 'What exactly does Gruntless do?',
+    question: 'How does Gruntless work?',
     answer:
-      "Gruntless uses advanced AI to build custom automation tools for you instantly. You describe routine tasks in plain English—like organizing messy spreadsheets or merging PDFs—and Gruntless creates a private 'agent' to handle that job automatically forever.",
+      "Gruntless leverages the power of LLMs to create hyper-customized 'mini-apps' tailored to your exact use-case. You describe routine tasks in plain language (like organizing messy spreadsheets or merging PDFs), and Gruntless works with an LLM on your behalf to create the exact automation you need, complete with a simple interface to run it on.",
   },
   {
     question: 'Is my sensitive data safe?',
@@ -28,17 +28,17 @@ const faq = [
   {
     question: 'Do I need coding experience to use it?',
     answer:
-      'Not at all. If you can send a text message, you can build a Gruntless agent. Just describe the task you want automated as if you were talking to a human assistant, and the AI handles the technical part.',
+      'Not at all. If you can send a text message, you can build a Gruntless automation. Just describe the task you want automated as if you were talking to a human assistant, and Gruntless handles the technical part.',
   },
   {
-    question: 'What kind of tasks is it best for?',
+    question: 'What kind of tasks is Gruntless best for?',
     answer:
-      'It excels at repetitive digital chores involving files. Think data entry, cleaning up CSVs, extracting specific info from batches of PDFs, reformatting reports, or connecting different file types.',
+      "Gruntless excels at any digital chores involving files. Whether it's repetitive or one-time, Gruntless can build it for you. Think cleaning up CSVs, merging or splitting them, extracting specific info from batches of PDFs, reformatting reports, working with ZIP files, JSONs, XMLs, Word docs - any combination of any of these - you name it; Gruntless will do it.",
   },
   {
     question: 'How do I know the automation will work correctly?',
     answer:
-      "Every agent is auto-tested behind the scenes before it's saved to ensure it performs exactly as requested. You can also run test files through it instantly to verify the results yourself.",
+      "There is no black-box here. You're the captain, building the automation hand-in-hand with Gruntless. Once a version is finished, you can test it and iterate as much as you need.",
   },
 ];
 
@@ -62,7 +62,7 @@ const About = observer(() => {
     <Container size='md' py='xl'>
       <Stack gap='md' mb={50}>
         <Flex align='center' gap='sm'>
-          <Title order={2}>The {highlightText('Gruntless')} Story</Title>
+          <Title order={1}>The {highlightText('Gruntless')} Story</Title>
         </Flex>
 
         <Text size='md' c={'dimmed'}>
@@ -88,10 +88,10 @@ const About = observer(() => {
 
         <Text size='md' c='dimmed'>
           But then I realized... the AI doesn't <em>have</em> to see your data.
-          It can just learn its <em>structure</em>, and build the workflow you
-          need. Then, with some clever engineering, we can ensure that workflow
-          runs {highlightText('completely locally')} on your machine - none of
-          your data has to go anywhere, ever!
+          It can just learn its <em>structure</em>, and build the automation you
+          need. Then, with some clever engineering, we can ensure that
+          automation runs {highlightText('completely locally')} on your machine
+          - none of your data has to go anywhere, ever!
         </Text>
 
         <Text size='md' c='dimmed'>
@@ -105,7 +105,7 @@ const About = observer(() => {
         </Text>
 
         <Box mt='xl'>
-          <Title order={3} mb='md'>
+          <Title order={2} mb='md'>
             FAQ
           </Title>
           <Accordion variant='separated'>

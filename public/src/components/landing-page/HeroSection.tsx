@@ -17,7 +17,7 @@ export default function HeroSection() {
         >
           <IconShieldCheck size={18} color={STYLES.COLORS.APP_THEME.SHADE_6} />
           <Text size='sm' fw={500} c={STYLES.COLORS.APP_THEME.SHADE_6}>
-            Privacy-first workflows built by AI
+            Privacy-first automations built by AI
           </Text>
         </Flex>
 
@@ -61,8 +61,8 @@ export default function HeroSection() {
         <Text size='lg' c='dimmed' mb='xl' maw={700} mx='auto'>
           Gruntless is your personal developer for file busywork. Describe any
           tedious task - from organizing client PDFs to updating complex
-          spreadsheets - and Gruntless builds a secure, local workflow to do it
-          for you.
+          spreadsheets - and Gruntless builds a secure, local automation to do
+          it for you.
         </Text>
 
         <LandingCTAButton />

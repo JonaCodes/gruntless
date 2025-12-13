@@ -36,8 +36,8 @@ const App = observer(() => {
   const location = useLocation();
   const isLandingPage = location.pathname === '/';
   const isWorkflowCreatorPage =
-    location.pathname === '/workflows/new' ||
-    (location.pathname.startsWith('/workflows/') &&
+    location.pathname === '/grunts/new' ||
+    (location.pathname.startsWith('/grunts/') &&
       location.pathname.endsWith('/edit'));
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -148,6 +148,7 @@ const App = observer(() => {
         </AppShell.Aside>
       )}
 
+      {/* Note: make sure to update sitemap.xml when adding public routes */}
       <AppShell.Main style={{ height: isLandingPage ? 'inherit' : '100vh' }}>
         {!opened && (
           <Routes>
@@ -158,9 +159,15 @@ const App = observer(() => {
 
             <Route path='/about' element={<About />} />
 
-            {/* Protected Routes - Require Authentication */}
+            {/* Backwards compatibility for the one/two users already using the old URL */}
             <Route
               path='/workflows'
+              element={<Navigate to='/grunts' replace />}
+            />
+
+            {/* Protected Routes - Require Authentication */}
+            <Route
+              path='/grunts'
               element={
                 <ProtectedRoute>
                   <Workflows />
@@ -168,7 +175,7 @@ const App = observer(() => {
               }
             />
             <Route
-              path='/workflows/new'
+              path='/grunts/new'
               element={
                 <ProtectedRoute>
                   <WorkflowCreator />
@@ -176,7 +183,7 @@ const App = observer(() => {
               }
             />
             <Route
-              path='/workflows/:id/edit'
+              path='/grunts/:id/edit'
               element={
                 <ProtectedRoute>
                   <WorkflowCreator />

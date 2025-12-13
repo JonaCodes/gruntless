@@ -37,12 +37,12 @@ export const features: Feature[] = [
     icon: IconBolt,
     title: 'Built by AI in a Flash',
     description:
-      "Describe what you need in natural language, like 'merge all invoices by date', and get the AI build or update your workflow whenever you need.",
+      "Describe what you need in natural language, like 'merge all invoices by date', and get the AI build or update your automations whenever you need.",
   },
   {
     icon: IconTool,
     title: 'No More Broken Scripts',
     description:
-      'Say goodbye to fragile macros and unreliable freelancer scripts. Gruntless builds robust, professional-grade tools that just work on demand.',
+      'Say goodbye to fragile macros and unreliable freelancer scripts. Gruntless builds robust, professional-grade automations that just work on demand.',
   },
 ];

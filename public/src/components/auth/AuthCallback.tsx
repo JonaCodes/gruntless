@@ -31,7 +31,7 @@ const AuthCallback = () => {
         userStore.setIsLoadingUser(false);
 
         await handlePendingShare();
-        navigate('/workflows');
+        navigate('/grunts');
       } catch (err: any) {
         console.error('Error syncing user:', err.message);
         navigate('/oops/signin');

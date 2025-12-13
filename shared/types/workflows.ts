@@ -6,6 +6,7 @@ export type WorkflowCategory =
   | 'Legal'
   | 'Marketing';
 
+// Make sure to update BUILD_WORKFLOW_PROMPT in buildWorkflow.ts when updating this
 export type WorkflowFieldType =
   | 'multi_file_upload'
   | 'file_upload'

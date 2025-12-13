@@ -16,10 +16,10 @@ const Navbar = observer(({ setNavbarOpened }: NavbarProps) => {
 
   const navLinks = [
     {
-      label: 'Workflows',
-      description: 'Build, manage, and run your Grunt workflows',
+      label: 'Grunts',
+      description: 'Build, manage, and run your Grunt automations',
       icon: IconLayoutGrid,
-      to: '/workflows',
+      to: '/grunts',
     },
     {
       label: 'About',

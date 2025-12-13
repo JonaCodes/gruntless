@@ -33,7 +33,7 @@ const FileUploadField = ({ field, files, onDrop }: FileUploadFieldProps) => {
             </Text>
           ) : (
             <Text size='sm' c='dimmed' ta='center'>
-              Drag files here or click to browse
+              {field.label}
             </Text>
           )}
           <IconUpload stroke={1.5} color='var(--mantine-color-dimmed)' />
