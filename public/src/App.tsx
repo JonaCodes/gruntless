@@ -4,7 +4,8 @@ import {
   Route,
   useLocation,
   Navigate,
-  useSearchParams,
+  matchPath,
+  useNavigate,
 } from 'react-router-dom';
 import { AppShell, Burger, Group } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
@@ -40,7 +41,7 @@ const App = observer(() => {
     (location.pathname.startsWith('/grunts/') &&
       location.pathname.endsWith('/edit'));
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const LARGE_PADDING = 'xl';
   const GENERAL_PADDING = LARGE_PADDING;
@@ -84,15 +85,25 @@ const App = observer(() => {
     window.scrollTo({ top: 0 });
   }, [location.pathname]);
 
-  // Sync URL query params with workflow navbar state
+  // Sync URL path params with workflow navbar state
   useEffect(() => {
-    const workflowId = searchParams.get('workflow');
-    if (workflowId && workflowId !== appStore.selectedWorkflowId) {
+    const match = matchPath('/grunts/:id', location.pathname);
+    const workflowId = match?.params.id;
+
+    // Ensure we don't treat "new" as an ID if it accidentally matches (though route order helps, explicit check is safer)
+    if (
+      workflowId &&
+      workflowId !== 'new' &&
+      workflowId !== appStore.selectedWorkflowId
+    ) {
       appStore.openWorkflowNavbar(workflowId);
-    } else if (!workflowId && appStore.workflowNavbarOpened) {
+    } else if (
+      (!workflowId || workflowId === 'new') &&
+      appStore.workflowNavbarOpened
+    ) {
       appStore.closeWorkflowNavbar();
     }
-  }, [searchParams]);
+  }, [location.pathname]);
 
   return (
     <AppShell
@@ -141,7 +152,7 @@ const App = observer(() => {
               workflowId={appStore.selectedWorkflowId}
               onClose={() => {
                 appStore.closeWorkflowNavbar();
-                setSearchParams({});
+                navigate('/grunts');
               }}
             />
           )}
@@ -167,7 +178,7 @@ const App = observer(() => {
 
             {/* Protected Routes - Require Authentication */}
             <Route
-              path='/grunts'
+              path='/grunts/:id?'
               element={
                 <ProtectedRoute>
                   <Workflows />

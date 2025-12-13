@@ -1,5 +1,5 @@
 import { Card } from '@mantine/core';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { Workflow } from '@shared/types/workflows';
 import classes from '../workflows.module.css';
@@ -13,11 +13,11 @@ interface WorkflowCardProps {
 }
 
 const WorkflowCard = observer(({ workflow }: WorkflowCardProps) => {
-  const [, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
   const isActive = appStore.selectedWorkflowId === workflow.metadata.id;
 
   const handleBodyClick = () => {
-    setSearchParams({ workflow: workflow.metadata.id });
+    navigate(`/grunts/${workflow.metadata.id}`);
   };
 
   return (
