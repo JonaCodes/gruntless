@@ -44,6 +44,7 @@ export function transformToFrontendFormat(
       ? {
           dependencies: workflow.execution.dependencies || [],
           outputFilename: workflow.execution.outputFilename,
+          isTextOutput: workflow.execution.isTextOutput,
           script: workflow.execution.script,
         }
       : undefined,

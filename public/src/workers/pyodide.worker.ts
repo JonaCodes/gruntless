@@ -12,7 +12,9 @@ type WorkerMessage =
       payload: {
         script: string;
         files: { fieldId: string; name: string; content: ArrayBuffer }[];
-        outputFilename: string;
+        textInputs: Record<string, string>;
+        outputFilename: string | null;
+        isTextOutput: boolean;
       };
     }
   | {
@@ -34,6 +36,7 @@ type WorkerResponse =
       type: typeof WORKER_MESSAGES.SUCCESS;
       payload:
         | { output: Blob | null }
+        | { textOutput: string }
         | {
             extraction: {
               columns?: string[];
@@ -64,10 +67,12 @@ ctx.onmessage = async (event: MessageEvent<WorkerMessage>) => {
         break;
 
       case WORKER_MESSAGES.RUN:
-        const output = await controller.run(
+        const result = await controller.run(
           payload.script,
           payload.files,
+          payload.textInputs,
           payload.outputFilename,
+          payload.isTextOutput,
           (type, message) => {
             postMessage({
               type: WORKER_MESSAGES.LOG,
@@ -75,7 +80,17 @@ ctx.onmessage = async (event: MessageEvent<WorkerMessage>) => {
             });
           }
         );
-        postMessage({ type: WORKER_MESSAGES.SUCCESS, payload: { output } });
+        if (payload.isTextOutput) {
+          postMessage({
+            type: WORKER_MESSAGES.SUCCESS,
+            payload: { textOutput: result as string },
+          });
+        } else {
+          postMessage({
+            type: WORKER_MESSAGES.SUCCESS,
+            payload: { output: result as Blob | null },
+          });
+        }
         break;
 
       case WORKER_MESSAGES.EXTRACT:

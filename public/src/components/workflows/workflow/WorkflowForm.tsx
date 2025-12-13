@@ -1,7 +1,18 @@
 import { useState, useEffect } from 'react';
-import { Stack, Button, Text, Alert, Group, Anchor, Flex } from '@mantine/core';
+import {
+  Stack,
+  Button,
+  Text,
+  Alert,
+  Group,
+  Anchor,
+  Flex,
+  Paper,
+} from '@mantine/core';
 import { FileWithPath } from '@mantine/dropzone';
 import { IconAlertCircle, IconCheck } from '@tabler/icons-react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import {
   WorkflowField,
   WorkflowAction,
@@ -32,7 +43,7 @@ const WorkflowForm = ({
   const [files, setFiles] = useState<Record<string, FileWithPath[]>>({});
   const [textInputs, setTextInputs] = useState<Record<string, string>>({});
 
-  const { run, status, error, output, logs } = usePyodideRunner({
+  const { run, status, error, output, textOutput, logs } = usePyodideRunner({
     dependencies: execution?.dependencies,
   });
 
@@ -46,11 +57,17 @@ const WorkflowForm = ({
       ([fieldId, fileList]) => fileList.map((file) => ({ fieldId, file }))
     );
 
-    await run(execution.script, filesWithFieldIds, execution.outputFilename);
+    await run(
+      execution.script,
+      filesWithFieldIds,
+      textInputs,
+      execution.outputFilename,
+      execution.isTextOutput ?? false
+    );
   };
 
   const handleDownload = () => {
-    if (output && execution) {
+    if (output && execution && execution.outputFilename) {
       const url = URL.createObjectURL(output);
       const a = document.createElement('a');
       a.href = url;
@@ -61,13 +78,18 @@ const WorkflowForm = ({
   };
 
   useEffect(() => {
-    if (status === EXECUTION_STATUS.SUCCESS && output) {
-      handleDownload();
-      trackWorkflowRun(workflowId, true);
+    if (status === EXECUTION_STATUS.SUCCESS) {
+      if (output) {
+        handleDownload();
+        trackWorkflowRun(workflowId, true);
+      } else if (textOutput) {
+        // No download needed for text output
+        trackWorkflowRun(workflowId, true);
+      }
     } else if (status === EXECUTION_STATUS.ERROR) {
       trackWorkflowRun(workflowId, false);
     }
-  }, [status, output, workflowId]);
+  }, [status, output, textOutput, workflowId]);
 
   const renderField = (field: WorkflowField) => {
     switch (field.type) {
@@ -127,7 +149,7 @@ const WorkflowForm = ({
       )}
 
       <Flex direction='column' gap='4' align={'end'}>
-        {status === EXECUTION_STATUS.SUCCESS && (
+        {status === EXECUTION_STATUS.SUCCESS && output && (
           <Alert
             icon={<IconCheck size={18} />}
             title='Success'
@@ -142,6 +164,14 @@ const WorkflowForm = ({
               if they haven't.
             </Text>
           </Alert>
+        )}
+
+        {status === EXECUTION_STATUS.SUCCESS && textOutput && (
+          <Paper p='md' withBorder w='100%'>
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              {textOutput}
+            </ReactMarkdown>
+          </Paper>
         )}
 
         <WorkflowLogs logs={logs} />
