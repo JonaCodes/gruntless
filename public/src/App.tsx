@@ -18,7 +18,6 @@ import appStore from './stores/appStore';
 import userStore from './stores/userStore';
 import { getUserData } from './clients/app-client';
 import EmptyState from './components/empty-states/EmptyState';
-// import { APP_ADMIN_ID } from '@shared/consts/general';
 import Logo from './components/navbar/Logo';
 import Navbar from './components/navbar/Navbar';
 import About from './components/about/About';
@@ -27,6 +26,7 @@ import WorkflowNavbar from './components/workflows/workflow/WorkflowNavbar';
 import workflowsNavbarClasses from './components/workflows/workflowsNavbar.module.css';
 import WorkflowCreator from './components/workflow-creator/WorkflowCreator';
 import AdminSeedWorkflow from './components/admin/AdminSeedWorkflow';
+import UserManagement from './components/backoffice/UserManagement';
 
 const App = observer(() => {
   const isSmall = useMediaQuery('(max-width: 768px)');
@@ -200,17 +200,16 @@ const App = observer(() => {
               }
             />
 
-            <Route path='/auth/callback' element={<AuthCallback />} />
-
-            {/* Protected Routes */}
-            {/* <Route
-              path='/backend'
+            <Route
+              path='/backoffice'
               element={
-                <ProtectedRoute requiredUserId={APP_ADMIN_ID}>
-                  <Backend />
+                <ProtectedRoute>
+                  <UserManagement />
                 </ProtectedRoute>
               }
-            /> */}
+            />
+
+            <Route path='/auth/callback' element={<AuthCallback />} />
 
             {/* Catch-all redirect to oops page */}
             <Route path='*' element={<Navigate to='/oops/default' replace />} />

@@ -67,5 +67,6 @@ export default class User extends Model {
 
   static associate(models: any) {
     this.belongsTo(models.Account, { foreignKey: 'account_id' });
+    this.hasMany(models.Workflow, { foreignKey: 'user_id', as: 'Workflows' });
   }
 }
