@@ -24,7 +24,7 @@ export const createShare = async (req: Request, res: Response) => {
     const shareId = await shareService.createShare(workflowId);
     const url = `${req.protocol}://${req.get(
       'host'
-    )}/workflows/?${WF_SHARE_URL_PARAM}=${shareId}`;
+    )}/grunts/?${WF_SHARE_URL_PARAM}=${shareId}`;
 
     res.json({ url, shareId });
   } catch (error) {
