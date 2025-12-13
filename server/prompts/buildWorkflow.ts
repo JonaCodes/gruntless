@@ -28,10 +28,28 @@ For each field, these are the possible parameters:
 - Use \`os.listdir('/input_files/{field_id}')\` to get uploaded filenames
 - Example: If field id is \`source_files\`, access via \`/input_files/source_files/\`
 
-### File Output
-- Always write output files to: \`/output/\`
+### Text Input Access
+- Text inputs (\`text_input\` and \`text_area\` fields) are automatically injected as Python variables
+- The variable name matches the field's \`id\`
+- Example: A field with \`id: "email_subject"\` becomes available as \`email_subject\` variable in your script
+- Multiline text is preserved (text_area values may contain newlines)
+
+### Output Options
+
+**File Output (default):**
+- Write output files to: \`/output/\`
 - Example: \`df.to_csv('/output/result.csv', index=False)\`
-- The \`outputFilename\` must match what you write to \`/output/\`
+- Set \`outputFilename\` to match what you write to \`/output/\`
+- Set \`isTextOutput: false\` (or omit it)
+
+**Text Output:**
+- For displaying text/markdown results instead of downloading a file
+- Write your output to: \`/output/result.md\`
+- Set \`isTextOutput: true\` and \`outputFilename: null\`
+- The content will be displayed directly in the UI
+- Write minimal text that resolves the user's request, no preamble
+- Use markdown formatting for better presentation
+- If you use headers, use small ones
 
 ### Environment Constraints
 - Runs in Pyodide (Python in WebAssembly) - no network access
@@ -63,11 +81,14 @@ Always respond with valid JSON in this exact structure:
   "fields": [],
   "execution": {
     "dependencies": [],
-    "outputFilename": "...",
+    "outputFilename": "result.csv",
+    "isTextOutput": false,
     "script": "..."
   }
 }
 \`\`\`
+
+Note: For text output, set \`"isTextOutput": true\` and \`"outputFilename": null\`.
 
 ## Example output:
 
@@ -90,9 +111,11 @@ Always respond with valid JSON in this exact structure:
   "execution": {
     "dependencies": ["pandas"],
     "outputFilename": "merged_user_data.csv",
+    "isTextOutput": false,
     "script": "import pandas as pd\nprint('Processing...')"
   }
 }
+
 \`\`\`
 
 ## Your Task

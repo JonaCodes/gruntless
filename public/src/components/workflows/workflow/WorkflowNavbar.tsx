@@ -24,7 +24,7 @@ const WorkflowNavbar = observer(
     const { metadata, fields, actionButton } = workflow;
 
     return (
-      <Flex direction='column' h='100%' mt={'xl'}>
+      <Flex direction='column' h='100%' mt={'xl'} style={{ overflowY: 'auto' }}>
         <Flex justify='space-between' align='start' mb='lg'>
           <Title order={4} fw={400}>
             {metadata.name}

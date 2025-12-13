@@ -43,12 +43,29 @@ export class PyodideController {
     }
   }
 
+  private generateVariableInjection(
+    textInputs: Record<string, string>
+  ): string {
+    if (Object.keys(textInputs).length === 0) return '';
+
+    const lines = ['# === Gruntless Inputs ==='];
+    for (const [fieldId, value] of Object.entries(textInputs)) {
+      // Use triple quotes for multiline safety, escape any triple quotes in value
+      const escaped = value.replace(/\\/g, '\\\\').replace(/"""/g, '\\"\\"\\"');
+      lines.push(`${fieldId} = """${escaped}"""`);
+    }
+    lines.push('# === End Inputs ===\n');
+    return lines.join('\n');
+  }
+
   async run(
     script: string,
     files: { fieldId: string; name: string; content: ArrayBuffer }[],
-    outputFilename: string,
+    textInputs: Record<string, string>,
+    outputFilename: string | null,
+    isTextOutput: boolean,
     onLog: (type: 'stdout' | 'stderr', message: string) => void
-  ): Promise<Blob | null> {
+  ): Promise<Blob | string | null> {
     if (this.initPromise) {
       await this.initPromise;
     }
@@ -80,10 +97,31 @@ export class PyodideController {
         batched: (msg: string) => onLog(LOG_TYPES.STDERR, msg),
       });
 
-      // 4. Execute Script
-      await this.pyodide.runPythonAsync(script);
+      // 4. Execute Script (with variable injection for text inputs)
+      const variableInjection = this.generateVariableInjection(textInputs);
+      const fullScript = variableInjection + script;
+      await this.pyodide.runPythonAsync(fullScript);
 
       // 5. Read Output
+      if (isTextOutput) {
+        // Text output mode: read from TEXT_OUTPUT_FILE
+        const textOutputPath = PYODIDE_CONFIG.DIRS.TEXT_OUTPUT_FILE;
+        let textContent = '';
+        if (this.pyodide.FS.analyzePath(textOutputPath).exists) {
+          const fileContent = this.pyodide.FS.readFile(textOutputPath, {
+            encoding: 'utf8',
+          });
+          textContent = fileContent as string;
+        }
+
+        // 6. Cleanup
+        this.cleanDir(PYODIDE_CONFIG.DIRS.INPUT);
+        this.cleanDir(PYODIDE_CONFIG.DIRS.OUTPUT);
+
+        return textContent;
+      }
+
+      // File output mode (existing behavior)
       let finalOutputPath = `${PYODIDE_CONFIG.DIRS.OUTPUT}/${outputFilename}`;
       let wasAutoZipped = false;
 

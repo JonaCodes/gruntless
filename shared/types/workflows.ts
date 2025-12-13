@@ -40,8 +40,9 @@ export interface WorkflowAction {
 
 export interface WorkflowExecution {
   dependencies: string[];
-  outputFilename: string;
+  outputFilename: string | null; // null when isTextOutput is true
   script: string;
+  isTextOutput?: boolean; // defaults to false for backward compatibility
 }
 
 export interface Workflow {

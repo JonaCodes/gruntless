@@ -6,6 +6,7 @@ export const PYODIDE_CONFIG = {
   DIRS: {
     INPUT: '/input_files',
     OUTPUT: '/output',
+    TEXT_OUTPUT_FILE: '/output/result.md',
   },
   AUTO_ZIP: {
     NAME: 'gruntless_auto_output',

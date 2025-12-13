@@ -22,6 +22,7 @@ interface PyodideRunnerState {
     | typeof EXECUTION_STATUS.ERROR;
   error: string | null;
   output: Blob | null;
+  textOutput: string | null;
   logs: { type: 'stdout' | 'stderr'; message: string }[];
 }
 
@@ -30,6 +31,7 @@ export const usePyodideRunner = (options: PyodideRunnerOptions = {}) => {
     status: EXECUTION_STATUS.IDLE,
     error: null,
     output: null,
+    textOutput: null,
     logs: [],
   });
 
@@ -61,7 +63,8 @@ export const usePyodideRunner = (options: PyodideRunnerOptions = {}) => {
           setState((prev) => ({
             ...prev,
             status: EXECUTION_STATUS.SUCCESS,
-            output: payload.output,
+            output: 'output' in payload ? payload.output : null,
+            textOutput: 'textOutput' in payload ? payload.textOutput : null,
           }));
           break;
         case WORKER_MESSAGES.ERROR:
@@ -94,7 +97,9 @@ export const usePyodideRunner = (options: PyodideRunnerOptions = {}) => {
     async (
       script: string,
       files: { fieldId: string; file: FileWithPath }[],
-      outputFilename: string
+      textInputs: Record<string, string>,
+      outputFilename: string | null,
+      isTextOutput: boolean
     ) => {
       if (!workerRef.current) return;
 
@@ -103,6 +108,7 @@ export const usePyodideRunner = (options: PyodideRunnerOptions = {}) => {
         status: EXECUTION_STATUS.RUNNING,
         error: null,
         output: null,
+        textOutput: null,
         logs: [],
       }));
 
@@ -119,7 +125,9 @@ export const usePyodideRunner = (options: PyodideRunnerOptions = {}) => {
         payload: {
           script,
           files: fileBuffers,
+          textInputs,
           outputFilename,
+          isTextOutput,
         },
       });
 
